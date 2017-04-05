@@ -80,6 +80,7 @@ public class ToDoListDBAdapter {
 
             }
         }
+        cursor.close();
         return toDoList;
     }
 
