@@ -1,8 +1,15 @@
 package todolist.youtube.com.codetutor.db;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import todolist.youtube.com.codetutor.bean.ToDo;
 
 /**
  * Created by anildeshpande on 3/23/17.
@@ -20,7 +27,7 @@ public class ToDoListDBAdapter {
     private static final String COLUMN_TODO="todo";
 
     //create table table_todo(task_id integer primary key, todo text not null);
-    private static String CREATE_TABLE_TODO="CREATE TABLE"+TABLE_TODO+"("+COLUMN_TODO_ID+" INTEGER PRIMARY KEY, "+COLUMN_TODO+" TEXT NOT NULL)";
+    private static String CREATE_TABLE_TODO="CREATE TABLE "+TABLE_TODO+"("+COLUMN_TODO_ID+" INTEGER PRIMARY KEY, "+COLUMN_TODO+" TEXT NOT NULL)";
 
     private Context context;
     private SQLiteDatabase  sqLliteDatabase;
@@ -40,7 +47,42 @@ public class ToDoListDBAdapter {
     }
 
 
-    //insert,delete,modify methods
+    //insert,delete,modify,query methods
+
+    public boolean insert(String toDoItem){
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(COLUMN_TODO,toDoItem);
+
+        return sqLliteDatabase.insert(TABLE_TODO,null,contentValues)>0;
+    }
+
+    public boolean delete(int taskId){
+       return sqLliteDatabase.delete(TABLE_TODO, COLUMN_TODO_ID+" = "+taskId,null)>0;
+    }
+
+    public boolean modify(int taskId, String newToDoItem){
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(COLUMN_TODO,newToDoItem);
+
+       return sqLliteDatabase.update(TABLE_TODO,contentValues, COLUMN_TODO_ID+" = "+taskId,null)>0;
+    }
+
+
+    public List<ToDo> getAllToDos(){
+        List<ToDo> toDoList=new ArrayList<ToDo>();
+
+        Cursor cursor=sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO},null,null,null,null,null,null);
+
+        if(cursor!=null &cursor.getCount()>0){
+            while(cursor.moveToNext()){
+                ToDo toDo=new ToDo(cursor.getLong(0),cursor.getString(1));
+                toDoList.add(toDo);
+
+            }
+        }
+        return toDoList;
+    }
+
 
 
 
