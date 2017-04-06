@@ -14,7 +14,7 @@
         android:inputType="text"
         android:ems="10"
         android:gravity="center"
-        android:id="@+id/editTextToDo"
+        android:id="@+id/editTextNewToDoString"
         android:hint="DOTO" />
 
     <Button
@@ -29,6 +29,8 @@
         android:layout_height="wrap_content"
         android:maxLines="10"
         android:lines="10"
+        android:textSize="20sp"
+        android:gravity="center"
         android:id="@+id/textViewToDos"/>
 
     <RelativeLayout
@@ -70,12 +72,12 @@
             android:layout_alignParentLeft="true"
             android:inputType="text"
             android:gravity="center"
+            android:id="@+id/editTextNewToDo"
             android:hint="Modify ToDo" />
 
 
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

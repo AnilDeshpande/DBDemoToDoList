@@ -105,7 +105,8 @@ public class ToDoListDBAdapter {
         }
 
         @Override
-        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        public void onUpgrade(SQLiteDatabase sqLiteDatabase,
+                              int oldVersion, int newVersion) {
             //Not imlemented now
         }
     }
