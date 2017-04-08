@@ -46,7 +46,6 @@ public class ToDoListDBAdapter {
         return toDoListDBAdapterInstance;
     }
 
-
     //insert,delete,modify,query methods
 
     public boolean insert(String toDoItem){
@@ -67,7 +66,6 @@ public class ToDoListDBAdapter {
        return sqLliteDatabase.update(TABLE_TODO,contentValues, COLUMN_TODO_ID+" = "+taskId,null)>0;
     }
 
-
     public List<ToDo> getAllToDos(){
         List<ToDo> toDoList=new ArrayList<ToDo>();
 
@@ -83,9 +81,6 @@ public class ToDoListDBAdapter {
         cursor.close();
         return toDoList;
     }
-
-
-
 
     private static class ToDoListDBHelper extends SQLiteOpenHelper{
 
@@ -107,7 +102,7 @@ public class ToDoListDBAdapter {
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase,
                               int oldVersion, int newVersion) {
-            //Not imlemented now
+            //Not implemented now
         }
     }
 
