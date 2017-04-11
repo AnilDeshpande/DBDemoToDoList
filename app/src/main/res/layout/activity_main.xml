@@ -17,6 +17,15 @@
         android:id="@+id/editTextNewToDoString"
         android:hint="DOTO" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:gravity="center"
+        android:id="@+id/editTextPlace"
+        android:hint="Place" />
+
     <Button
         android:text="Add"
         android:layout_width="wrap_content"

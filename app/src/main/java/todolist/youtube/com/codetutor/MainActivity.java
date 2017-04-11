@@ -14,7 +14,7 @@ import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText editTextNewToDoString, editTextToDoId, editTextNewToDo;
+    private EditText editTextNewToDoString, editTextToDoId, editTextNewToDo, editTextPlace;
     private TextView textViewToDos;
     private Button buttonAddToDo, buttonRemoveToDo, buttonModifyToDo;
 
@@ -36,8 +36,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextNewToDoString=(EditText)findViewById(R.id.editTextNewToDoString);
         editTextToDoId=(EditText)findViewById(R.id.editTextToDoId);
         editTextNewToDo=(EditText)findViewById(R.id.editTextNewToDo);
+        editTextPlace=(EditText)findViewById(R.id.editTextPlace);
 
         textViewToDos=(TextView)findViewById(R.id.textViewToDos);
+
 
         buttonAddToDo=(Button)findViewById(R.id.buttonAddToDo);
         buttonRemoveToDo=(Button)findViewById(R.id.buttonRemoveToDo);
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void addNewToDo(){
-        toDoListDBAdapter.insert(editTextNewToDoString.getText().toString());
+        toDoListDBAdapter.insert(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString());
         setNewList();
     }
 
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(toDos!=null && toDos.size()>0){
             StringBuilder stringBuilder=new StringBuilder("");
             for(ToDo toDo:toDos){
-                stringBuilder.append(toDo.getId()+", "+toDo.getToDo()+"\n");
+                stringBuilder.append(toDo.getId()+", "+toDo.getToDo()+", "+toDo.getPlace()+"\n");
             }
             return stringBuilder.toString();
         }else {
