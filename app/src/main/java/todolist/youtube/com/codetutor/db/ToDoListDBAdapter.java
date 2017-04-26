@@ -29,7 +29,7 @@ public class ToDoListDBAdapter {
     private static final String COLUMN_PLACE="place";
 
     //create table table_todo(task_id integer primary key, todo text not null);
-    private static String CREATE_TABLE_TODO="CREATE TABLE "+TABLE_TODO+"("+COLUMN_TODO_ID+" INTEGER PRIMARY KEY, "+COLUMN_TODO+" TEXT NOT NULL "+
+    private static String CREATE_TABLE_TODO="CREATE TABLE "+TABLE_TODO+"("+COLUMN_TODO_ID+" INTEGER PRIMARY KEY, "+COLUMN_TODO+" TEXT NOT NULL, "+
             COLUMN_PLACE+ " TEXT )";
 
     private Context context;
