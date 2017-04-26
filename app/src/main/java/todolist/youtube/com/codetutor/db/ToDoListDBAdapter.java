@@ -1,10 +1,16 @@
 package todolist.youtube.com.codetutor.db;
 
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,25 +22,28 @@ import todolist.youtube.com.codetutor.bean.ToDo;
  * Created by anildeshpande on 3/23/17.
  */
 
-public class ToDoListDBAdapter {
+public class ToDoListDBAdapter{
 
     private static final String TAG=ToDoListDBAdapter.class.getSimpleName();
 
-    private static final String DB_NAME="todolist.db";
-    private static final int DB_VERSION=2;
+    public static final String DB_NAME="todolist.db";
+    public static final int DB_VERSION=2;
 
-    private static final String TABLE_TODO="table_todo";
-    private static final String COLUMN_TODO_ID="task_id";
-    private static final String COLUMN_TODO="todo";
-    private static final String COLUMN_PLACE="place";
+    public static final String TABLE_TODO="table_todo";
+    public static final String COLUMN_TODO_ID="task_id";
+    public static final String COLUMN_TODO="todo";
+    public static final String COLUMN_PLACE="place";
 
     //create table table_todo(task_id integer primary key, todo text not null);
-    private static String CREATE_TABLE_TODO="CREATE TABLE "+TABLE_TODO+"("+COLUMN_TODO_ID+" INTEGER PRIMARY KEY, "+COLUMN_TODO+" TEXT NOT NULL, "+
+
+    public static String CREATE_TABLE_TODO="CREATE TABLE "+TABLE_TODO+"("+COLUMN_TODO_ID+" INTEGER PRIMARY KEY, "+COLUMN_TODO+" TEXT NOT NULL, "+
             COLUMN_PLACE+ " TEXT )";
 
     private Context context;
     private SQLiteDatabase  sqLliteDatabase;
     private static ToDoListDBAdapter toDoListDBAdapterInstance;
+
+
 
 
     private ToDoListDBAdapter(Context context){
@@ -47,6 +56,16 @@ public class ToDoListDBAdapter {
             toDoListDBAdapterInstance=new ToDoListDBAdapter(context);
         }
         return toDoListDBAdapterInstance;
+    }
+
+    public Cursor getCursorsForAllToDos(){
+        Cursor cursor=sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO, COLUMN_PLACE},null,null,null,null,null,null);
+        return cursor;
+    }
+
+    public Cursor getCursorForSpecificPlace(String place){
+        Cursor cursor=sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO},COLUMN_PLACE +" LIKE ?",new String[]{place},null,null,null,null);
+        return cursor;
     }
 
     //insert,delete,modify,query methods

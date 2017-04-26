@@ -15,6 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="todolist.youtube.com.codetutor"
+            android:name=".ToDoProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>
