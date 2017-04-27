@@ -64,7 +64,12 @@ public class ToDoListDBAdapter{
     }
 
     public Cursor getCursorForSpecificPlace(String place){
-        Cursor cursor=sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO},COLUMN_PLACE +" LIKE ?",new String[]{place},null,null,null,null);
+        Cursor cursor=sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO},COLUMN_PLACE +" LIKE '%"+place+"%'",null,null,null,null,null);
+        return cursor;
+    }
+
+    public Cursor getCount(){
+        Cursor cursor=sqLliteDatabase.rawQuery("SELECT COUNT(*) FROM "+TABLE_TODO,null);
         return cursor;
     }
 
