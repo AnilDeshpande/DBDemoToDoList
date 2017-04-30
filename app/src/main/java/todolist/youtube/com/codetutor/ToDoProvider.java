@@ -64,8 +64,21 @@ public class ToDoProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) throws UnsupportedOperationException{
-        throw new UnsupportedOperationException("insert operation not supported");
+        Uri returnUri = null;
+        switch (MATCHER.match(uri)){
+            case ALL_TODOS: returnUri= insertToDo(uri,contentValues);break;
+            default: new UnsupportedOperationException("insert operation not supported"); break;
+        }
+
+        return returnUri ;
     }
+
+    private Uri insertToDo(Uri uri, ContentValues contentValues){
+       long id = toDoListDBAdapter.insert(contentValues);
+        getContext().getContentResolver().notifyChange(uri,null);
+        return Uri.parse(PATH_TODO_TABLE+"/"+id);
+    }
+
 
     @Override
     public boolean onCreate() {

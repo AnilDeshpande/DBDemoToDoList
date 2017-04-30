@@ -90,6 +90,10 @@ public class ToDoListDBAdapter{
         return sqLliteDatabase.insert(TABLE_TODO,null,contentValues)>0;
     }
 
+    public long insert(ContentValues contentValues){
+        return sqLliteDatabase.insert(TABLE_TODO,null,contentValues);
+    }
+
     public boolean delete(int taskId){
        return sqLliteDatabase.delete(TABLE_TODO, COLUMN_TODO_ID+" = "+taskId,null)>0;
     }
