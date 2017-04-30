@@ -58,7 +58,16 @@ public class ToDoProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) throws UnsupportedOperationException{
-        throw new UnsupportedOperationException("update operation not supported");
+        int updateCount=-1;
+        switch (MATCHER.match(uri)){
+            case ALL_TODOS: updateCount=update(contentValues,s,strings);break;
+            default:new UnsupportedOperationException("insert operation not supported"); break;
+        }
+        return updateCount;
+    }
+
+    private int update(ContentValues contentValues, String whereCluase, String [] strings){
+        return toDoListDBAdapter.update(contentValues,whereCluase,strings);
     }
 
     @Nullable
@@ -88,7 +97,16 @@ public class ToDoProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) throws UnsupportedOperationException{
-        throw new UnsupportedOperationException("delete operation not supported");
+        int deleteCount=-1;
+        switch (MATCHER.match(uri)){
+            case ALL_TODOS: deleteCount= delete(s,strings);break;
+            default:new UnsupportedOperationException("delete operation not supported"); break;
+        }
+        return deleteCount;
+    }
+
+    private int delete(String whereClause, String [] whereValues){
+        return toDoListDBAdapter.delete(whereClause,whereValues);
     }
 
     @Nullable

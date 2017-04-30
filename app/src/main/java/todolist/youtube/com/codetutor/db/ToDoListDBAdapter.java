@@ -58,6 +58,7 @@ public class ToDoListDBAdapter{
         return toDoListDBAdapterInstance;
     }
 
+    //Will be used in the content provider
     public Cursor getCursorsForAllToDos(){
         Cursor cursor=sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO, COLUMN_PLACE},null,null,null,null,null,null);
         return cursor;
@@ -90,6 +91,7 @@ public class ToDoListDBAdapter{
         return sqLliteDatabase.insert(TABLE_TODO,null,contentValues)>0;
     }
 
+    //Will be used in the content provider
     public long insert(ContentValues contentValues){
         return sqLliteDatabase.insert(TABLE_TODO,null,contentValues);
     }
@@ -98,11 +100,21 @@ public class ToDoListDBAdapter{
        return sqLliteDatabase.delete(TABLE_TODO, COLUMN_TODO_ID+" = "+taskId,null)>0;
     }
 
+    //Will be used by the provider
+    public int delete(String whereClause, String [] whereValues){
+        return sqLliteDatabase.delete(TABLE_TODO,whereClause,whereValues);
+    }
+
     public boolean modify(int taskId, String newToDoItem){
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_TODO,newToDoItem);
 
        return sqLliteDatabase.update(TABLE_TODO,contentValues, COLUMN_TODO_ID+" = "+taskId,null)>0;
+    }
+
+    //Will be used in the content provider
+    public int update(ContentValues contentValues, String s, String [] strings){
+        return sqLliteDatabase.update(TABLE_TODO,contentValues, s,strings);
     }
 
     public List<ToDo> getAllToDos(){
