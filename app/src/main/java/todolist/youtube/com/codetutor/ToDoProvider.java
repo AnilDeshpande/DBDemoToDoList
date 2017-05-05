@@ -57,56 +57,9 @@ public class ToDoProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) throws UnsupportedOperationException{
-        int updateCount=-1;
-        switch (MATCHER.match(uri)){
-            case TODOS_LIST: updateCount=update(contentValues,s,strings);break;
-            default:new UnsupportedOperationException("insert operation not supported"); break;
-        }
-        return updateCount;
-    }
-
-    private int update(ContentValues contentValues, String whereCluase, String [] strings){
-        return toDoListDBAdapter.update(contentValues,whereCluase,strings);
-    }
-
-    @Nullable
-    @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) throws UnsupportedOperationException{
-        Uri returnUri = null;
-        switch (MATCHER.match(uri)){
-            case TODOS_LIST: returnUri= insertToDo(uri,contentValues);break;
-            default: new UnsupportedOperationException("insert operation not supported"); break;
-        }
-
-        return returnUri ;
-    }
-
-    private Uri insertToDo(Uri uri, ContentValues contentValues){
-       long id = toDoListDBAdapter.insert(contentValues);
-        getContext().getContentResolver().notifyChange(uri,null);
-        return Uri.parse(PATH_TODO_LIST +"/"+id);
-    }
-
-
-    @Override
     public boolean onCreate() {
         toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getContext());
         return true;
-    }
-
-    @Override
-    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) throws UnsupportedOperationException{
-        int deleteCount=-1;
-        switch (MATCHER.match(uri)){
-            case TODOS_LIST: deleteCount= delete(s,strings);break;
-            default:new UnsupportedOperationException("delete operation not supported"); break;
-        }
-        return deleteCount;
-    }
-
-    private int delete(String whereClause, String [] whereValues){
-        return toDoListDBAdapter.delete(whereClause,whereValues);
     }
 
     @Nullable
@@ -121,6 +74,53 @@ public class ToDoProvider extends ContentProvider {
             default:cursor=null; break;
         }
         return cursor;
+    }
+
+    @Nullable
+    @Override
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) throws UnsupportedOperationException{
+        Uri returnUri = null;
+        switch (MATCHER.match(uri)){
+            case TODOS_LIST: returnUri= insertToDo(uri,contentValues);break;
+            default: new UnsupportedOperationException("insert operation not supported"); break;
+        }
+
+        return returnUri ;
+    }
+
+    @Override
+    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) throws UnsupportedOperationException{
+        int updateCount=-1;
+        switch (MATCHER.match(uri)){
+            case TODOS_LIST: updateCount=update(contentValues,s,strings);break;
+            default:new UnsupportedOperationException("insert operation not supported"); break;
+        }
+        return updateCount;
+    }
+
+    @Override
+    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) throws UnsupportedOperationException{
+        int deleteCount=-1;
+        switch (MATCHER.match(uri)){
+            case TODOS_LIST: deleteCount= delete(s,strings);break;
+            default:new UnsupportedOperationException("delete operation not supported"); break;
+        }
+        return deleteCount;
+    }
+
+    private int update(ContentValues contentValues, String whereCluase, String [] strings){
+        return toDoListDBAdapter.update(contentValues,whereCluase,strings);
+    }
+
+
+    private Uri insertToDo(Uri uri, ContentValues contentValues){
+       long id = toDoListDBAdapter.insert(contentValues);
+        getContext().getContentResolver().notifyChange(uri,null);
+        return Uri.parse(PATH_TODO_LIST +"/"+id);
+    }
+    
+    private int delete(String whereClause, String [] whereValues){
+        return toDoListDBAdapter.delete(whereClause,whereValues);
     }
 
 }
