@@ -27,13 +27,10 @@ public class ToDoProvider extends ContentProvider {
     public static final Uri CONTENT_URI_2=Uri.parse("content://"+AUTHORITY+"/"+ PATH_TODO_PLACE);
     public static final Uri CONTENT_URI_3=Uri.parse("content://"+AUTHORITY+"/"+ PATH_TODO_COUNT);
 
-    public static final String CONTENT_TYPE_1= ContentResolver.CURSOR_DIR_BASE_TYPE+"/"+ PATH_TODO_LIST;
-    public static final String CONTENT_TYPE_2=ContentResolver.CURSOR_DIR_BASE_TYPE+"/"+ PATH_TODO_PLACE;
-    public static final String CONTENT_TYPE_3=ContentResolver.CURSOR_ITEM_BASE_TYPE+"/"+ PATH_TODO_COUNT;
-
     public static final int TODOS_LIST =1;
     public static final int TODOS_FROM_SPECIFIC_PLACE=2;
     public static final int TODOS_COUNT =3;
+
     private static final UriMatcher MATCHER=new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
@@ -41,6 +38,10 @@ public class ToDoProvider extends ContentProvider {
         MATCHER.addURI(AUTHORITY, PATH_TODO_PLACE,TODOS_FROM_SPECIFIC_PLACE);
         MATCHER.addURI(AUTHORITY, PATH_TODO_COUNT, TODOS_COUNT);
     }
+
+    public static final String CONTENT_TYPE_1= ContentResolver.CURSOR_DIR_BASE_TYPE+"/"+ PATH_TODO_LIST;
+    public static final String CONTENT_TYPE_2=ContentResolver.CURSOR_DIR_BASE_TYPE+"/"+ PATH_TODO_PLACE;
+    public static final String CONTENT_TYPE_3=ContentResolver.CURSOR_ITEM_BASE_TYPE+"/"+ PATH_TODO_COUNT;
 
     private ToDoListDBAdapter toDoListDBAdapter;
 
