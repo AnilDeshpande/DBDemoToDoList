@@ -56,6 +56,8 @@ public class ToDoProvider extends ContentProvider {
         return null;
     }
 
+
+
     @Override
     public boolean onCreate() {
         toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getContext());
@@ -118,7 +120,7 @@ public class ToDoProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri,null);
         return Uri.parse(PATH_TODO_LIST +"/"+id);
     }
-    
+
     private int delete(String whereClause, String [] whereValues){
         return toDoListDBAdapter.delete(whereClause,whereValues);
     }
