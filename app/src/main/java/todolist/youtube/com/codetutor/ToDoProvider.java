@@ -118,7 +118,7 @@ public class ToDoProvider extends ContentProvider {
     private Uri insertToDo(Uri uri, ContentValues contentValues){
        long id = toDoListDBAdapter.insert(contentValues);
         getContext().getContentResolver().notifyChange(uri,null);
-        return Uri.parse(PATH_TODO_LIST +"/"+id);
+        return Uri.parse("content://"+AUTHORITY+"/"+ PATH_TODO_LIST +"/"+id);
     }
 
     private int delete(String whereClause, String [] whereValues){
