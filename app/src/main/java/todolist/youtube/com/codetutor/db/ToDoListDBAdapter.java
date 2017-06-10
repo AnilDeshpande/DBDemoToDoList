@@ -65,7 +65,7 @@ public class ToDoListDBAdapter{
     }
 
     public Cursor getCursorForSpecificPlace(String place){
-        //SELECT task_id,todo FROM table_todo WHERE place LIKE '%from desk%'
+        //SELECT task_id,todo FROM table_todo WHERE place LIKE '%desk%'
         Cursor cursor=sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO},COLUMN_PLACE +" LIKE '%"+place+"%'",null,null,null,null,null);
         return cursor;
     }

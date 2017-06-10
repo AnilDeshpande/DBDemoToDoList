@@ -39,9 +39,9 @@ public class ToDoProvider extends ContentProvider {
         MATCHER.addURI(AUTHORITY, PATH_TODO_COUNT, TODOS_COUNT);
     }
 
-    public static final String CONTENT_TYPE_1= ContentResolver.CURSOR_DIR_BASE_TYPE+"/"+ PATH_TODO_LIST;
-    public static final String CONTENT_TYPE_2=ContentResolver.CURSOR_DIR_BASE_TYPE+"/"+ PATH_TODO_PLACE;
-    public static final String CONTENT_TYPE_3=ContentResolver.CURSOR_ITEM_BASE_TYPE+"/"+ PATH_TODO_COUNT;
+    public static final String MIME_TYPE_1 = ContentResolver.CURSOR_DIR_BASE_TYPE+"/"+ "vnd.com.codetutore.todos";
+    public static final String MIME_TYPE_2 = ContentResolver.CURSOR_DIR_BASE_TYPE+"/"+ "vnd.com.codetutore.todos.place";
+    public static final String MIME_TYPE_3 = ContentResolver.CURSOR_ITEM_BASE_TYPE+"/"+ "vnd.com.codetutore.todocount";
 
     private ToDoListDBAdapter toDoListDBAdapter;
 
@@ -49,9 +49,9 @@ public class ToDoProvider extends ContentProvider {
     @Override
     public String getType(@NonNull Uri uri) {
         switch (MATCHER.match(uri)){
-            case TODOS_LIST: return CONTENT_TYPE_1;
-            case TODOS_FROM_SPECIFIC_PLACE: return CONTENT_TYPE_2;
-            case TODOS_COUNT: return CONTENT_TYPE_3;
+            case TODOS_LIST: return MIME_TYPE_1;
+            case TODOS_FROM_SPECIFIC_PLACE: return MIME_TYPE_2;
+            case TODOS_COUNT: return MIME_TYPE_3;
         }
         return null;
     }
