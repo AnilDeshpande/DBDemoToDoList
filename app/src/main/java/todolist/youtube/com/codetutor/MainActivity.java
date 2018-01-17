@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(this);
+        toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getApplicationContext());
         toDos=toDoListDBAdapter.getAllToDos();
 
         editTextNewToDoString=(EditText)findViewById(R.id.editTextNewToDoString);
