@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textViewToDos;
     private Button buttonAddToDo, buttonRemoveToDo, buttonModifyToDo;
 
+    private EditText editTextPlace;
+
     private ToDoListDBAdapter toDoListDBAdapter;
 
     private List<ToDo> toDos;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(this);
+        toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getApplicationContext());
         toDos=toDoListDBAdapter.getAllToDos();
 
         editTextNewToDoString=(EditText)findViewById(R.id.editTextNewToDoString);
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextNewToDo=(EditText)findViewById(R.id.editTextNewToDo);
 
         textViewToDos=(TextView)findViewById(R.id.textViewToDos);
+        editTextPlace =(EditText) findViewById(R.id.editTextPlace);
+
 
         buttonAddToDo=(Button)findViewById(R.id.buttonAddToDo);
         buttonRemoveToDo=(Button)findViewById(R.id.buttonRemoveToDo);
@@ -93,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(toDos!=null && toDos.size()>0){
             StringBuilder stringBuilder=new StringBuilder("");
             for(ToDo toDo:toDos){
-                stringBuilder.append(toDo.getId()+", "+toDo.getToDo()+"\n");
+                stringBuilder.append(toDo.getId()+", "+toDo.getToDo()+", "+ toDo.getPlace()+"\n");
             }
             return stringBuilder.toString();
         }else {
