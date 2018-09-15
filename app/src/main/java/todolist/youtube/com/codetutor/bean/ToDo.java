@@ -56,4 +56,14 @@ public class ToDo {
     public void setPlace(String place) {
         this.place = place;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ToDo){
+            return this.id==((ToDo)obj).id;
+        }else {
+            return false;
+        }
+
+    }
 }

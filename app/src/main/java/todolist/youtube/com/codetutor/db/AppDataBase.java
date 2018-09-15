@@ -5,10 +5,14 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import java.util.List;
+
 import todolist.youtube.com.codetutor.bean.ToDo;
 
 @Database(entities = {ToDo.class}, version = 1)
 public abstract class AppDataBase extends RoomDatabase{
+
+    List<ToDo> todos;
 
     public abstract ToDoDao toDoDao();
 
@@ -16,8 +20,12 @@ public abstract class AppDataBase extends RoomDatabase{
 
     public static AppDataBase getInstance(Context context){
         if(appDataBase==null){
-            appDataBase = Room.databaseBuilder(context,AppDataBase.class,"todo.db").build();
+            appDataBase = Room.databaseBuilder(context, AppDataBase.class,"todo.db").
+                    fallbackToDestructiveMigration().
+                    build();
         }
         return appDataBase;
     }
+
+
 }
