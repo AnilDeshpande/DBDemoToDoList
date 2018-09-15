@@ -1,14 +1,18 @@
 package todolist.youtube.com.codetutor.bean;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by anildeshpande on 4/3/17.
  */
-
+@Entity
 public class ToDo {
     /**
      * Created by anildeshpande on 4/3/17.
      */
 
+    @PrimaryKey(autoGenerate = true)
     private long id;
     private String toDo;
     private String place;

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.bean.ToDo;
+import todolist.youtube.com.codetutor.db.AppDataBase;
 import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private List<ToDo> toDos;
 
+    AppDataBase appDataBase;
+
 
 
 
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        appDataBase = AppDataBase.getInstance(this);
 
         toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getApplicationContext());
         toDos=toDoListDBAdapter.getAllToDos();
