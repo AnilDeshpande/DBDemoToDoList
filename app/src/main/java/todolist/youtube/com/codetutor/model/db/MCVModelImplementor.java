@@ -2,13 +2,10 @@ package todolist.youtube.com.codetutor.model.db;
 
 import java.util.List;
 
-import todolist.youtube.com.codetutor.MVCController;
 import todolist.youtube.com.codetutor.model.MVCModel;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 
 public class MCVModelImplementor implements MVCModel {
-
-    MVCController mvcController;
 
     ToDoListDBAdapter toDoListDBAdapter;
 
@@ -27,6 +24,7 @@ public class MCVModelImplementor implements MVCModel {
         boolean addSuccess = toDoListDBAdapter.insert(toDoItem, place);
         if (addSuccess){
             refresh();
+
         }
 
         return toDoListDBAdapter.insert(toDoItem, place);
