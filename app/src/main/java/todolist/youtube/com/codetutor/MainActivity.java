@@ -10,9 +10,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.model.bean.ToDo;
+import todolist.youtube.com.codetutor.model.db.MCVModelImplementor;
 import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MVCView {
 
     private EditText editTextNewToDoString, editTextToDoId, editTextNewToDo, editTextPlace;
     private TextView textViewToDos;
@@ -20,15 +21,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ToDoListDBAdapter toDoListDBAdapter;
 
+    MVCController mvcController;
+
     private List<ToDo> toDos;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mvcController = new MVCController(new MCVModelImplementor(ToDoListDBAdapter.getToDoListDBAdapterInstance(MainActivity.this)), this);
 
         toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getApplicationContext());
         toDos=toDoListDBAdapter.getAllToDos();
@@ -101,5 +103,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else {
             return "No todo items";
         }
+    }
+
+    @Override
+    public void onAddButtonClicked() {
+
+    }
+
+    @Override
+    public void onModifyButtonClicked(int id, String newToDoValue) {
+
+    }
+
+    @Override
+    public void onRemoveButtonClicked(int id) {
+
+    }
+
+    @Override
+    public void showAllToDos() {
+
     }
 }
