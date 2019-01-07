@@ -1,4 +1,4 @@
-package todolist.youtube.com.codetutor.bean;
+package todolist.youtube.com.codetutor.model.bean;
 
 /**
  * Created by anildeshpande on 4/3/17.

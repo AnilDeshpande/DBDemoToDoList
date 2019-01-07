@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import todolist.youtube.com.codetutor.bean.ToDo;
-import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
+import todolist.youtube.com.codetutor.model.bean.ToDo;
+import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 

@@ -1,4 +1,4 @@
-package todolist.youtube.com.codetutor.db;
+package todolist.youtube.com.codetutor.model.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import todolist.youtube.com.codetutor.bean.ToDo;
+import todolist.youtube.com.codetutor.model.bean.ToDo;
 
 /**
  * Created by anildeshpande on 3/23/17.
