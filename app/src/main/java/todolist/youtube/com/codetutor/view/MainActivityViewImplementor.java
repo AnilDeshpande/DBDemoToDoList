@@ -90,16 +90,19 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     @Override
     public void upDateViewOnRemove(List<ToDo> toDoList) {
         listener.updateViewonDataChage(toDoList);
+        clearEditTexts();
     }
 
     @Override
     public void updateViewOnModify(List<ToDo> toDoList) {
         listener.updateViewonDataChage(toDoList);
+        clearEditTexts();
     }
 
     @Override
     public void updateViewonAdd(List<ToDo> toDoList) {
         listener.updateViewonDataChage(toDoList);
+        clearEditTexts();
     }
 
     @Override
@@ -110,7 +113,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     private void clearEditTexts(){
         editTextNewToDo.setText("");
         editTextToDoId.setText("");
-        editTextNewToDo.setText("");
+        editTextNewToDoString.setText("");
         editTextPlace.setText("");
     }
 }

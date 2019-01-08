@@ -26,10 +26,9 @@ public class MCVModelImplementor implements MVCModel {
         boolean addSuccess = toDoListDBAdapter.insert(toDoItem, place);
         if (addSuccess){
             refresh();
-
         }
 
-        return toDoListDBAdapter.insert(toDoItem, place);
+        return addSuccess;
     }
     public boolean removeToDoItem(int id){
 
@@ -49,6 +48,7 @@ public class MCVModelImplementor implements MVCModel {
     }
 
     private void refresh(){
+        toDoItems.clear();
         toDoItems = this.toDoListDBAdapter.getAllToDos();
     }
 
