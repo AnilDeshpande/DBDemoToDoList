@@ -6,7 +6,7 @@ import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 
 public class MyApplication extends Application {
 
-    ToDoListDBAdapter toDoListDBAdapter;
+    static ToDoListDBAdapter toDoListDBAdapter;
 
     @Override
     public void onCreate() {
@@ -14,7 +14,7 @@ public class MyApplication extends Application {
         toDoListDBAdapter = ToDoListDBAdapter.getToDoListDBAdapterInstance(this);
     }
 
-    public ToDoListDBAdapter getToDoListDBAdapter() {
+    public static ToDoListDBAdapter getToDoListDBAdapter() {
         return toDoListDBAdapter;
     }
 }

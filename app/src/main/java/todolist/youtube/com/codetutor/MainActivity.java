@@ -14,88 +14,30 @@ import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.db.MCVModelImplementor;
 import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 import todolist.youtube.com.codetutor.view.MVCView;
+import todolist.youtube.com.codetutor.view.MainActivityViewImplementor;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, MVCView {
+public class MainActivity extends AppCompatActivity implements MainActivityViewImplementor.MVCMainActivityViewListener {
 
-    private EditText editTextNewToDoString, editTextToDoId, editTextNewToDo, editTextPlace;
-    private TextView textViewToDos;
-    private Button buttonAddToDo, buttonRemoveToDo, buttonModifyToDo;
-
-    MVCController mvcController;
+    MainActivityViewImplementor mvcView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        mvcController = new MVCController(new MCVModelImplementor(((MyApplication)getApplication()).getToDoListDBAdapter()), this);
-
-        editTextNewToDoString=(EditText)findViewById(R.id.editTextNewToDoString);
-        editTextToDoId=(EditText)findViewById(R.id.editTextToDoId);
-        editTextNewToDo=(EditText)findViewById(R.id.editTextNewToDo);
-        editTextPlace=(EditText)findViewById(R.id.editTextPlace);
-        textViewToDos=(TextView)findViewById(R.id.textViewToDos);
-
-
-        buttonAddToDo=(Button)findViewById(R.id.buttonAddToDo);
-        buttonRemoveToDo=(Button)findViewById(R.id.buttonRemoveToDo);
-        buttonModifyToDo=(Button)findViewById(R.id.buttonModifyToDo);
-
-        buttonModifyToDo.setOnClickListener(this);
-        buttonRemoveToDo.setOnClickListener(this);
-        buttonAddToDo.setOnClickListener(this);
-
+        mvcView = new MainActivityViewImplementor(MainActivity.this,null);
+        setContentView(mvcView.getRootView());
+        mvcView.setMVCMainActivityViewListener(this);
+        mvcView.initViews();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mvcController.onScreenLoad();
+        mvcView.bindDataToView();
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.buttonAddToDo: mvcController.onAddButtonClicked(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString()); break;
-            case R.id.buttonRemoveToDo: mvcController.onRemoveBottonClicked(Integer.parseInt(editTextToDoId.getText().toString())); break;
-            case R.id.buttonModifyToDo: mvcController.onModifyButtonClicked(Integer.parseInt(editTextToDoId.getText().toString()), editTextNewToDo.getText().toString()); break;
-            default: break;
-        }
-    }
-
-
-    @Override
-    public void updateViewonAdd(List<ToDo> toDoList) {
-        textViewToDos.setText(toDoList.toString());
-        clearEditTexts();
-
-
-    }
-
-    @Override
-    public void upDateViewOnRemove(List<ToDo> toDoList) {
-        textViewToDos.setText(toDoList.toString());
-        clearEditTexts();
-    }
-
-
-
-    @Override
-    public void updateViewOnModify(List<ToDo> toDoList) {
-        textViewToDos.setText(toDoList.toString());
-        clearEditTexts();
-    }
-
-    @Override
-    public void showAllToDos(List<ToDo> toDoList) {
-        textViewToDos.setText(toDoList.toString());
-        clearEditTexts();
-    }
-
-    private void clearEditTexts(){
-        editTextNewToDo.setText("");
-        editTextToDoId.setText("");
-        editTextNewToDo.setText("");
-        editTextPlace.setText("");
+    public void updateViewonDataChage(List<ToDo> toDoList) {
+        mvcView.showAllToDos(toDoList);
     }
 }

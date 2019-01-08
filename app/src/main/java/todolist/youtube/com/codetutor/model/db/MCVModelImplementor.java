@@ -11,6 +11,8 @@ public class MCVModelImplementor implements MVCModel {
 
     List<ToDo> toDoItems;
 
+
+
     public MCVModelImplementor(ToDoListDBAdapter toDoListDBAdapter){
         this.toDoListDBAdapter = toDoListDBAdapter;
         toDoItems = this.toDoListDBAdapter.getAllToDos();
