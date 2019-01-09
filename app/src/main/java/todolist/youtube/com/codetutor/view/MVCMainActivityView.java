@@ -12,4 +12,6 @@ public interface MVCMainActivityView extends MVCView{
     public void updateViewonAdd(List<ToDo> toDoList);
     public void upDateViewOnRemove(List<ToDo> toDoList);
     public void updateViewOnModify(List<ToDo> toDoList);
+
+    public void showErrorToast(String errorMessage);
 }

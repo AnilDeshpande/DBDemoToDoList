@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import todolist.youtube.com.codetutor.MyApplication;
 import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.controller.MVCController;
+import todolist.youtube.com.codetutor.model.MVCModel;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.db.MCVModelImplementor;
 
@@ -22,12 +24,8 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
 
     MVCController mvcController;
 
-    private MVCMainActivityViewListener listener;
+    private MCVModelImplementor mvcModel;
 
-
-    public interface MVCMainActivityViewListener{
-        public void updateViewonDataChage(List<ToDo> toDoList);
-    }
 
     private EditText editTextNewToDoString, editTextToDoId, editTextNewToDo, editTextPlace;
     private TextView textViewToDos;
@@ -35,6 +33,9 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
 
     public MainActivityViewImplementor (Context context, ViewGroup continer){
         rootView = LayoutInflater.from(context).inflate(R.layout.activity_main,continer);
+        mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
+
+        mvcController = new MVCController(mvcModel, this);
     }
 
 
@@ -51,7 +52,6 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
         buttonRemoveToDo=(Button)rootView.findViewById(R.id.buttonRemoveToDo);
         buttonModifyToDo=(Button)rootView.findViewById(R.id.buttonModifyToDo);
 
-        mvcController = new MVCController(new MCVModelImplementor(MyApplication.getToDoListDBAdapter()), this);
 
         buttonModifyToDo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,10 +78,6 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
         mvcController.bindDatatoView();
     }
 
-    public void setMVCMainActivityViewListener(MVCMainActivityViewListener listener){
-        this.listener = listener;
-    }
-
     @Override
     public View getRootView() {
         return rootView;
@@ -89,19 +85,19 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
 
     @Override
     public void upDateViewOnRemove(List<ToDo> toDoList) {
-        listener.updateViewonDataChage(toDoList);
+        this.showAllToDos(toDoList);
         clearEditTexts();
     }
 
     @Override
     public void updateViewOnModify(List<ToDo> toDoList) {
-        listener.updateViewonDataChage(toDoList);
+        this.showAllToDos(toDoList);
         clearEditTexts();
     }
 
     @Override
     public void updateViewonAdd(List<ToDo> toDoList) {
-        listener.updateViewonDataChage(toDoList);
+        this.showAllToDos(toDoList);
         clearEditTexts();
     }
 
@@ -115,5 +111,10 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
         editTextToDoId.setText("");
         editTextNewToDoString.setText("");
         editTextPlace.setText("");
+    }
+
+    @Override
+    public void showErrorToast(String errorMessage) {
+        Toast.makeText(rootView.getContext(),errorMessage, Toast.LENGTH_LONG).show();
     }
 }

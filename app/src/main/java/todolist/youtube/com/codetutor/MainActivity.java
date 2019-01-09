@@ -16,7 +16,7 @@ import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 import todolist.youtube.com.codetutor.view.MVCView;
 import todolist.youtube.com.codetutor.view.MainActivityViewImplementor;
 
-public class MainActivity extends AppCompatActivity implements MainActivityViewImplementor.MVCMainActivityViewListener {
+public class MainActivity extends AppCompatActivity {
 
     MainActivityViewImplementor mvcView;
 
@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
 
         mvcView = new MainActivityViewImplementor(MainActivity.this,null);
         setContentView(mvcView.getRootView());
-        mvcView.setMVCMainActivityViewListener(this);
         mvcView.initViews();
     }
 
@@ -34,10 +33,5 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewI
     protected void onResume() {
         super.onResume();
         mvcView.bindDataToView();
-    }
-
-    @Override
-    public void updateViewonDataChage(List<ToDo> toDoList) {
-        mvcView.showAllToDos(toDoList);
     }
 }

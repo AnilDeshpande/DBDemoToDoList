@@ -1,7 +1,6 @@
 package todolist.youtube.com.codetutor.controller;
 
 import todolist.youtube.com.codetutor.model.db.MCVModelImplementor;
-import todolist.youtube.com.codetutor.view.MVCView;
 import todolist.youtube.com.codetutor.view.MainActivityViewImplementor;
 
 public class MVCController {
@@ -14,28 +13,47 @@ public class MVCController {
     }
 
     public void bindDatatoView(){
-        mvcView.showAllToDos(mvcModel.getAllToDos());
+       try{
+           mvcView.showAllToDos(mvcModel.getAllToDos());
+       }catch (Exception e){
+           mvcView.showErrorToast(e.getMessage());
+       }
+
     }
 
-    public void onAddButtonClicked(String toDoItem, String place){
-        boolean addSucess = mvcModel.addToDoItem( toDoItem,  place);
-        if(addSucess){
-            mvcView.updateViewonAdd(mvcModel.getAllToDos());
-        }
+    public void onAddButtonClicked(String toDoItem, String place) {
+       try{
+           boolean success = mvcModel.addToDoItem( toDoItem,  place);
+           if(success){
+               mvcView.updateViewonAdd(mvcModel.getAllToDos());
+           }
+       }catch (Exception e){
+           mvcView.showErrorToast(e.getMessage());
+       }
     }
 
     public void onRemoveBottonClicked(int id){
-        boolean success = mvcModel.removeToDoItem(id);
-        if(success){
-            mvcView.upDateViewOnRemove(mvcModel.getAllToDos());
-        }
+       try{
+           boolean success = mvcModel.removeToDoItem(id);
+           if(success){
+               mvcView.upDateViewOnRemove(mvcModel.getAllToDos());
+           }
+       }catch (Exception e){
+           mvcView.showErrorToast(e.getMessage());
+       }
+
     }
 
     public void onModifyButtonClicked(int id, String newValue){
-        boolean success = mvcModel.modifyToDoItem(id,newValue);
-        if(success){
-            mvcView.updateViewOnModify(mvcModel.getAllToDos());
-        }
+       try{
+           boolean success = mvcModel.modifyToDoItem(id,newValue);
+           if(success){
+               mvcView.updateViewOnModify(mvcModel.getAllToDos());
+           }
+       }catch (Exception e){
+           mvcView.showErrorToast(e.getMessage());
+       }
+
     }
 
 
