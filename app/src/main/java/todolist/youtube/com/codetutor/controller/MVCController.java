@@ -1,6 +1,6 @@
 package todolist.youtube.com.codetutor.controller;
 
-import todolist.youtube.com.codetutor.model.db.MCVModelImplementor;
+import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.view.MainActivityViewImplementor;
 
 public class MVCController {

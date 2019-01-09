@@ -14,9 +14,8 @@ import java.util.List;
 import todolist.youtube.com.codetutor.MyApplication;
 import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.controller.MVCController;
-import todolist.youtube.com.codetutor.model.MVCModel;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
-import todolist.youtube.com.codetutor.model.db.MCVModelImplementor;
+import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 
 public class MainActivityViewImplementor implements MVCMainActivityView {
 
