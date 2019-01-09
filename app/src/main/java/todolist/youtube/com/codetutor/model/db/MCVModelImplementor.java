@@ -17,6 +17,7 @@ public class MCVModelImplementor implements MVCModel {
         toDoItems = this.toDoListDBAdapter.getAllToDos();
     }
 
+    @Override
     public List<ToDo> getAllToDos() throws Exception{
         if(this.toDoItems!=null && this.toDoItems.size()>0){
             return this.toDoItems;
@@ -26,6 +27,7 @@ public class MCVModelImplementor implements MVCModel {
 
     }
 
+    @Override
     public boolean addToDoItem(String toDoItem, String place) throws Exception{
         boolean addSuccess = toDoListDBAdapter.insert(toDoItem, place);
         if (addSuccess){
@@ -36,6 +38,8 @@ public class MCVModelImplementor implements MVCModel {
 
         return addSuccess;
     }
+
+    @Override
     public boolean removeToDoItem(int id) throws Exception{
 
         boolean deleteSuccess = toDoListDBAdapter.delete(id);
@@ -47,6 +51,8 @@ public class MCVModelImplementor implements MVCModel {
         return deleteSuccess;
 
     }
+
+    @Override
     public boolean modifyToDoItem(int id, String newToDoValuel) throws Exception{
         boolean modifySuccess = toDoListDBAdapter.modify(id,newToDoValuel);
         if(modifySuccess){
