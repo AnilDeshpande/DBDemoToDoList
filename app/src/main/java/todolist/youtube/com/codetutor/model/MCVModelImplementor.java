@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
-import todolist.youtube.com.codetutor.model.MVCModel;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 
