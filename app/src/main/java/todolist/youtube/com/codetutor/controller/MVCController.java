@@ -12,16 +12,16 @@ public class MVCController {
         this.mvcView = mvcView;
     }
 
-    public void bindDatatoView(){
+   public void bindDatatoView(){
        try{
            mvcView.showAllToDos(mvcModel.getAllToDos());
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
        }
 
-    }
+   }
 
-    public void onAddButtonClicked(String toDoItem, String place) {
+   public void onAddButtonClicked(String toDoItem, String place) {
        try{
            boolean success = mvcModel.addToDoItem( toDoItem,  place);
            if(success){
@@ -30,9 +30,9 @@ public class MVCController {
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
        }
-    }
+   }
 
-    public void onRemoveBottonClicked(int id){
+   public void onRemoveBottonClicked(int id){
        try{
            boolean success = mvcModel.removeToDoItem(id);
            if(success){
@@ -42,9 +42,9 @@ public class MVCController {
            mvcView.showErrorToast(e.getMessage());
        }
 
-    }
+   }
 
-    public void onModifyButtonClicked(int id, String newValue){
+   public void onModifyButtonClicked(int id, String newValue){
        try{
            boolean success = mvcModel.modifyToDoItem(id,newValue);
            if(success){
@@ -53,8 +53,7 @@ public class MVCController {
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
        }
-
-    }
+   }
 
 
 }
