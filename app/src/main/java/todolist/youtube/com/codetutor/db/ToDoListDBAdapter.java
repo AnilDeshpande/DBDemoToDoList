@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.bean.ToDo;
+import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 
 /**
  * Created by anildeshpande on 3/23/17.
@@ -51,33 +52,39 @@ public class ToDoListDBAdapter {
 
     //insert,delete,modify,query methods
 
-    public boolean insert(String toDoItem){
-        ContentValues contentValues=new ContentValues();
-        contentValues.put(COLUMN_TODO,toDoItem);
-
-        return sqLliteDatabase.insert(TABLE_TODO,null,contentValues)>0;
-    }
-
-    public boolean insert(String toDoItem, String place){
+    public boolean insert(String toDoItem, String place) throws Exception{
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_TODO,toDoItem);
         contentValues.put(COLUMN_PLACE,place);
 
-        return sqLliteDatabase.insert(TABLE_TODO,null,contentValues)>0;
+        boolean success = sqLliteDatabase.insert(TABLE_TODO,null,contentValues)>0;
+
+        if(!success){
+            throw new Exception("Something went wrong!!!");
+        }
+
+        return success;
     }
 
-    public boolean delete(int taskId){
-       return sqLliteDatabase.delete(TABLE_TODO, COLUMN_TODO_ID+" = "+taskId,null)>0;
+    public boolean delete(int taskId) throws Exception{
+        boolean success = sqLliteDatabase.delete(TABLE_TODO, COLUMN_TODO_ID+" = "+taskId,null)>0;
+        if(!success){
+            throw new ToDoNotFoundException("Id is wrong");
+        }
+       return  success;
     }
 
-    public boolean modify(int taskId, String newToDoItem){
+    public boolean modify(int taskId, String newToDoItem) throws Exception{
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_TODO,newToDoItem);
-
-       return sqLliteDatabase.update(TABLE_TODO,contentValues, COLUMN_TODO_ID+" = "+taskId,null)>0;
+        boolean success = sqLliteDatabase.update(TABLE_TODO,contentValues, COLUMN_TODO_ID+" = "+taskId,null)>0;
+        if(!success){
+            throw new ToDoNotFoundException("Id is wrong");
+        }
+       return success;
     }
 
-    public List<ToDo> getAllToDos(){
+    public List<ToDo> getAllToDos() throws Exception{
         List<ToDo> toDoList=new ArrayList<ToDo>();
 
         Cursor cursor=sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO, COLUMN_PLACE},null,null,null,null,null,null);
@@ -88,6 +95,8 @@ public class ToDoListDBAdapter {
                 toDoList.add(toDo);
 
             }
+        } else {
+          throw new Exception("List Emptry");
         }
         cursor.close();
         return toDoList;

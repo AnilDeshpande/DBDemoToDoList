@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,7 +32,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getApplicationContext());
-        toDos=toDoListDBAdapter.getAllToDos();
+        try {
+            toDos=toDoListDBAdapter.getAllToDos();
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
 
         editTextNewToDoString=(EditText)findViewById(R.id.editTextNewToDoString);
         editTextToDoId=(EditText)findViewById(R.id.editTextToDoId);
@@ -72,34 +78,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void addNewToDo(){
-        toDoListDBAdapter.insert(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString());
+        try{
+            toDoListDBAdapter.insert(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString());
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
         setNewList();
     }
 
     private void removeToDo(){
-        toDoListDBAdapter.delete(Integer.parseInt(editTextToDoId.getText().toString()));
-        setNewList();
+        try{
+            toDoListDBAdapter.delete(Integer.parseInt(editTextToDoId.getText().toString()));
+            setNewList();
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void modifyToDo(){
         int id=Integer.parseInt(editTextToDoId.getText().toString());
         String newToDO=editTextNewToDo.getText().toString();
-        toDoListDBAdapter.modify(id,newToDO);
+        try{
+            toDoListDBAdapter.modify(id,newToDO);
+        }catch (Exception e){
+            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
         setNewList();
     }
 
 
 
     private String getToDoListString(){
-        toDos=toDoListDBAdapter.getAllToDos();
-        if(toDos!=null && toDos.size()>0){
-            StringBuilder stringBuilder=new StringBuilder("");
-            for(ToDo toDo:toDos){
-                stringBuilder.append(toDo.getId()+", "+toDo.getToDo()+", "+toDo.getPlace()+"\n");
+        String message = null;
+        try{
+            toDos=toDoListDBAdapter.getAllToDos();
+            if(toDos!=null && toDos.size()>0){
+                StringBuilder stringBuilder=new StringBuilder("");
+                for(ToDo toDo:toDos){
+                    stringBuilder.append(toDo.getId()+", "+toDo.getToDo()+", "+toDo.getPlace()+"\n");
+                }
+                message =  stringBuilder.toString();
             }
-            return stringBuilder.toString();
-        }else {
-            return "No todo items";
+        }catch (Exception e){
+            message = e.getMessage();
         }
+        return message;
     }
 }
