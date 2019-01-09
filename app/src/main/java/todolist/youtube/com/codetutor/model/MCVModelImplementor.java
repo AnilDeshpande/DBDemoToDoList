@@ -1,5 +1,6 @@
 package todolist.youtube.com.codetutor.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
@@ -10,12 +11,25 @@ import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 public class MCVModelImplementor implements MVCModel {
 
     ToDoListDBAdapter toDoListDBAdapter;
-
     List<ToDo> toDoItems;
+
+    List<Observer> observers;
+
 
     public MCVModelImplementor(ToDoListDBAdapter toDoListDBAdapter){
         this.toDoListDBAdapter = toDoListDBAdapter;
         toDoItems = this.toDoListDBAdapter.getAllToDos();
+        observers = new ArrayList<Observer>();
+    }
+
+    public void registerObserver(Observer observer){
+        observers.add(observer);
+    }
+
+    private void notifyObservers(){
+        for(Observer observer: observers){
+            observer.update();
+        }
     }
 
     @Override
@@ -29,39 +43,38 @@ public class MCVModelImplementor implements MVCModel {
     }
 
     @Override
-    public boolean addToDoItem(String toDoItem, String place) throws Exception{
+    public void addToDoItem(String toDoItem, String place) throws Exception{
         boolean addSuccess = toDoListDBAdapter.insert(toDoItem, place);
         if (addSuccess){
             refresh();
+            notifyObservers();
         }else{
             throw new Exception("Some thing went wrong!!!");
         }
-
-        return addSuccess;
     }
 
     @Override
-    public boolean removeToDoItem(int id) throws Exception{
+    public void removeToDoItem(int id) throws Exception{
 
         boolean deleteSuccess = toDoListDBAdapter.delete(id);
         if(deleteSuccess){
             refresh();
+            notifyObservers();
         }else{
             throw new ToDoNotFoundException("Id is wrong");
         }
-        return deleteSuccess;
 
     }
 
     @Override
-    public boolean modifyToDoItem(int id, String newToDoValuel) throws Exception{
+    public void modifyToDoItem(int id, String newToDoValuel) throws Exception{
         boolean modifySuccess = toDoListDBAdapter.modify(id,newToDoValuel);
         if(modifySuccess){
             refresh();
+            notifyObservers();
         } else{
             throw new ToDoNotFoundException("Id is wrong");
         }
-        return modifySuccess;
     }
 
     private void refresh(){

@@ -14,10 +14,11 @@ import java.util.List;
 import todolist.youtube.com.codetutor.MyApplication;
 import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.controller.MVCController;
+import todolist.youtube.com.codetutor.model.Observer;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 
-public class MainActivityViewImplementor implements MVCMainActivityView {
+public class MainActivityViewImplementor implements MVCMainActivityView, Observer {
 
     View rootView;
 
@@ -33,7 +34,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     public MainActivityViewImplementor (Context context, ViewGroup continer){
         rootView = LayoutInflater.from(context).inflate(R.layout.activity_main,continer);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
-
+        mvcModel.registerObserver(this);
         mvcController = new MVCController(mvcModel, this);
     }
 
@@ -115,5 +116,15 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     @Override
     public void showErrorToast(String errorMessage) {
         Toast.makeText(rootView.getContext(),errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void update() {
+        try{
+            this.showAllToDos(mvcModel.getAllToDos());
+        }catch (Exception e){
+            Toast.makeText(rootView.getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
     }
 }

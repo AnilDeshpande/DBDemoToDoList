@@ -23,10 +23,7 @@ public class MVCController {
 
    public void onAddButtonClicked(String toDoItem, String place) {
        try{
-           boolean success = mvcModel.addToDoItem( toDoItem,  place);
-           if(success){
-               mvcView.updateViewonAdd(mvcModel.getAllToDos());
-           }
+           mvcModel.addToDoItem( toDoItem,  place);
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
        }
@@ -34,10 +31,7 @@ public class MVCController {
 
    public void onRemoveBottonClicked(int id){
        try{
-           boolean success = mvcModel.removeToDoItem(id);
-           if(success){
-               mvcView.upDateViewOnRemove(mvcModel.getAllToDos());
-           }
+          mvcModel.removeToDoItem(id);
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
        }
@@ -46,10 +40,7 @@ public class MVCController {
 
    public void onModifyButtonClicked(int id, String newValue){
        try{
-           boolean success = mvcModel.modifyToDoItem(id,newValue);
-           if(success){
-               mvcView.updateViewOnModify(mvcModel.getAllToDos());
-           }
+           mvcModel.modifyToDoItem(id,newValue);
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
        }
