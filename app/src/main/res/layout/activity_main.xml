@@ -33,60 +33,11 @@
         android:id="@+id/buttonAddToDo"
         android:layout_gravity="right"/>
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerListViewToDos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxLines="10"
-        android:lines="10"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:id="@+id/textViewToDos"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:inputType="number"
-            android:gravity="center"
-            android:layout_toLeftOf="@+id/buttonRemoveToDo"
-            android:id="@+id/editTextToDoId"
-            android:hint="TODO Id" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remove"
-            android:id="@+id/buttonRemoveToDo"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            />
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Modify"
-            android:layout_below="@+id/buttonRemoveToDo"
-            android:id="@+id/buttonModifyToDo"
-            android:layout_alignParentRight="true"/>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/buttonModifyToDo"
-            android:layout_below="@id/editTextToDoId"
-            android:layout_alignParentLeft="true"
-            android:inputType="text"
-            android:gravity="center"
-            android:id="@+id/editTextNewToDo"
-            android:hint="Modify ToDo" />
-
-
-
-    </RelativeLayout>
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>

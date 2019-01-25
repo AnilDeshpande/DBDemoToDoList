@@ -1,6 +1,8 @@
 package todolist.youtube.com.codetutor.view;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,9 @@ import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.controller.MVCController;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
+import todolist.youtube.com.codetutor.view.adapters.ToDoAdapter;
 
-public class MainActivityViewImplementor implements MVCMainActivityView {
+public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAdapter.ListItemClickListener {
 
     View rootView;
 
@@ -26,9 +29,11 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     private MCVModelImplementor mvcModel;
 
 
-    private EditText editTextNewToDoString, editTextToDoId, editTextNewToDo, editTextPlace;
-    private TextView textViewToDos;
-    private Button buttonAddToDo, buttonRemoveToDo, buttonModifyToDo;
+    private EditText editTextNewToDoString, editTextPlace;
+    private RecyclerView recyclerView;
+    private Button buttonAddToDo;
+
+    ToDoAdapter toDoAdapter;
 
     public MainActivityViewImplementor (Context context, ViewGroup continer){
         rootView = LayoutInflater.from(context).inflate(R.layout.activity_main,continer);
@@ -41,29 +46,12 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     @Override
     public void initViews() {
         editTextNewToDoString=(EditText)rootView.findViewById(R.id.editTextNewToDoString);
-        editTextToDoId=(EditText)rootView.findViewById(R.id.editTextToDoId);
-        editTextNewToDo=(EditText)rootView.findViewById(R.id.editTextNewToDo);
         editTextPlace=(EditText)rootView.findViewById(R.id.editTextPlace);
-        textViewToDos=(TextView)rootView.findViewById(R.id.textViewToDos);
-
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext());
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerListViewToDos);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         buttonAddToDo=(Button)rootView.findViewById(R.id.buttonAddToDo);
-        buttonRemoveToDo=(Button)rootView.findViewById(R.id.buttonRemoveToDo);
-        buttonModifyToDo=(Button)rootView.findViewById(R.id.buttonModifyToDo);
-
-
-        buttonModifyToDo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mvcController.onModifyButtonClicked(Integer.parseInt(editTextToDoId.getText().toString()), editTextNewToDo.getText().toString());
-            }
-        });
-        buttonRemoveToDo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mvcController.onRemoveBottonClicked(Integer.parseInt(editTextToDoId.getText().toString()));
-            }
-        });
         buttonAddToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,18 +71,6 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     }
 
     @Override
-    public void upDateViewOnRemove(List<ToDo> toDoList) {
-        this.showAllToDos(toDoList);
-        clearEditTexts();
-    }
-
-    @Override
-    public void updateViewOnModify(List<ToDo> toDoList) {
-        this.showAllToDos(toDoList);
-        clearEditTexts();
-    }
-
-    @Override
     public void updateViewonAdd(List<ToDo> toDoList) {
         this.showAllToDos(toDoList);
         clearEditTexts();
@@ -102,12 +78,11 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
 
     @Override
     public void showAllToDos(List<ToDo> toDoList) {
-        textViewToDos.setText(toDoList.toString());
+        toDoAdapter = new ToDoAdapter(rootView.getContext(),toDoList, this);
+        recyclerView.setAdapter(toDoAdapter);
     }
 
     private void clearEditTexts(){
-        editTextNewToDo.setText("");
-        editTextToDoId.setText("");
         editTextNewToDoString.setText("");
         editTextPlace.setText("");
     }
@@ -115,5 +90,10 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     @Override
     public void showErrorToast(String errorMessage) {
         Toast.makeText(rootView.getContext(),errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+
     }
 }

@@ -4,8 +4,8 @@ import java.util.List;
 
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 
-public interface MVCMainActivityView extends MVCView{
-    public void showAllToDos(List<ToDo> toDoList);
-    public void updateViewonAdd(List<ToDo> toDoList);
+public interface MVCDataManipulatorView extends MVCView {
+    public void showRemovalSuccess();
+    public void showUpdatedValue(ToDo toDo);
     public void showErrorToast(String errorMessage);
 }

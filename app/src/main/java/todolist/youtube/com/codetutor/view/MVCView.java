@@ -9,9 +9,6 @@ import todolist.youtube.com.codetutor.model.bean.ToDo;
 public interface MVCView {
 
     public View getRootView();
-
     public void initViews();
-
-
-
+    public void bindDataToView();
 }

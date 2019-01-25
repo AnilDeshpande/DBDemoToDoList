@@ -32,7 +32,7 @@ public class MVCController {
        }
    }
 
-   public void onRemoveBottonClicked(int id){
+   /*public void onRemoveBottonClicked(int id){
        try{
            boolean success = mvcModel.removeToDoItem(id);
            if(success){
@@ -53,7 +53,7 @@ public class MVCController {
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
        }
-   }
+   }*/
 
 
 }
