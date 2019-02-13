@@ -1,5 +1,9 @@
 package todolist.youtube.com.codetutor.model.bean;
 
+import android.support.annotation.NonNull;
+
+import java.util.Comparator;
+
 /**
  * Created by anildeshpande on 4/3/17.
  */
@@ -56,5 +60,19 @@ public class ToDo {
     @Override
     public String toString() {
         return "("+ id+", "+toDo+", "+place+")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ToDo){
+            ToDo temp = (ToDo) obj;
+            if(temp.id==this.id){
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            return false;
+        }
     }
 }

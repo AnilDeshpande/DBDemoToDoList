@@ -1,6 +1,7 @@
 package todolist.youtube.com.codetutor.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -94,6 +95,8 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
 
     @Override
     public void onItemClicked(int position) {
-
+        Intent intent = new Intent(rootView.getContext(), DataManipulationActivity.class);
+        intent.putExtra("todoId", position);
+        rootView.getContext().startActivity(intent);
     }
 }
