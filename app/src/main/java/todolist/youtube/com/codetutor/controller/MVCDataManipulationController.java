@@ -14,7 +14,7 @@ public class MVCDataManipulationController {
         this.mvcView = mvcView;
     }
 
-    public void onRemoveBottonClicked(int id){
+    public void onRemoveBottonClicked(long id){
        try{
            boolean success = mvcModel.removeToDoItem(id);
            if(success){
@@ -26,7 +26,7 @@ public class MVCDataManipulationController {
 
    }
 
-   public void onModifyButtonClicked(int id, String newValue){
+   public void onModifyButtonClicked(long id, String newValue){
        try{
            boolean success = mvcModel.modifyToDoItem(id,newValue);
            if(success){

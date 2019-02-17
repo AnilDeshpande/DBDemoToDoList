@@ -33,12 +33,12 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
 
     ToDo toDo;
 
-    int toDoId;
+    long toDoId;
 
     public DataManipulatorViewImplementor(Context context, ViewGroup container, Intent intent){
         rootView = LayoutInflater.from(context).inflate(R.layout.acivity_data_manipulate, container);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
-        toDoId = intent.getIntExtra("todoId",0);
+        toDoId = intent.getLongExtra("todoId",1);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
         mvcController = new MVCDataManipulationController(mvcModel,this);
     }

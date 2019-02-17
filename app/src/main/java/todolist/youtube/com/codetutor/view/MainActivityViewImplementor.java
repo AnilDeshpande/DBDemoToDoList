@@ -94,9 +94,13 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
     }
 
     @Override
-    public void onItemClicked(int position) {
+    public void onItemClicked(long position) {
         Intent intent = new Intent(rootView.getContext(), DataManipulationActivity.class);
-        intent.putExtra("todoId", position);
+        try{
+            intent.putExtra("todoId", mvcModel.getToDo(position).getId());
+        }catch (Exception e){
+
+        }
         rootView.getContext().startActivity(intent);
     }
 }

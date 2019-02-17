@@ -66,11 +66,11 @@ public class ToDoListDBAdapter {
         return sqLliteDatabase.insert(TABLE_TODO,null,contentValues)>0;
     }
 
-    public boolean delete(int taskId){
+    public boolean delete(long taskId){
        return sqLliteDatabase.delete(TABLE_TODO, COLUMN_TODO_ID+" = "+taskId,null)>0;
     }
 
-    public boolean modify(int taskId, String newToDoItem){
+    public boolean modify(long taskId, String newToDoItem){
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_TODO,newToDoItem);
 

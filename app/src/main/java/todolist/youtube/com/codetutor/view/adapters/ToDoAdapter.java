@@ -21,7 +21,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
     ListItemClickListener listItemClickListener;
 
     public interface ListItemClickListener{
-        void onItemClicked(int position);
+        void onItemClicked(long position);
     }
 
     public ToDoAdapter(Context context, List<ToDo> toDos, ListItemClickListener listItemClickListener){
@@ -48,7 +48,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
             @Override
             public void onClick(View v) {
                 if(listItemClickListener!=null){
-                    listItemClickListener.onItemClicked(position);
+                    listItemClickListener.onItemClicked(toDo.getId());
                 }
             }
         });
