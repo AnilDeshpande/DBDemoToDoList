@@ -20,12 +20,12 @@ public class MCVModelImplementor implements MVCModel {
 
     @Override
     public List<ToDo> getAllToDos() throws Exception{
+        this.toDoItems = this.toDoListDBAdapter.getAllToDos();
         if(this.toDoItems!=null && this.toDoItems.size()>0){
             return this.toDoItems;
         } else {
           throw new Exception("Empty To Do List");
         }
-
     }
 
     @Override

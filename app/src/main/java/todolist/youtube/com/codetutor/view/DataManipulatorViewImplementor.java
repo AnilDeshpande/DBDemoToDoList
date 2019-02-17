@@ -12,10 +12,8 @@ import android.widget.Toast;
 
 import todolist.youtube.com.codetutor.MyApplication;
 import todolist.youtube.com.codetutor.R;
-import todolist.youtube.com.codetutor.controller.MVCController;
 import todolist.youtube.com.codetutor.controller.MVCDataManipulationController;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
-import todolist.youtube.com.codetutor.model.MVCModel;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 
 public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
@@ -83,13 +81,12 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
     public void bindDataToView() {
         try{
             toDo = mvcModel.getToDo(toDoId);
-            textViewToBeModifiedToDo.setText("Id: "+ toDo.getId());
+            textViewToBeModifiedToDoId.setText("Id: "+ toDo.getId());
             textViewToBeModifiedToDo.setText("ToDo: "+toDo.getToDo());
             textViewToBeModifiedToDoPlace.setText("Place: "+toDo.getPlace());
         }catch (Exception ex){
             Toast.makeText(rootView.getContext(),ex.getMessage(), Toast.LENGTH_LONG).show();
         }
-
     }
 
 
@@ -100,7 +97,7 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
 
     @Override
     public void showRemovalSuccess() {
-        textViewToBeModifiedToDo.setText("");
+        textViewToBeModifiedToDoId.setText("");
         textViewToBeModifiedToDo.setText("");
         textViewToBeModifiedToDoPlace.setText("");
         Toast.makeText(rootView.getContext(),"Successfully removed", Toast.LENGTH_LONG).show();

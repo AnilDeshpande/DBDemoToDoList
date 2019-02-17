@@ -9,14 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import todolist.youtube.com.codetutor.MyApplication;
 import todolist.youtube.com.codetutor.R;
-import todolist.youtube.com.codetutor.controller.MVCController;
+import todolist.youtube.com.codetutor.controller.MVCMainActivityController;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.view.adapters.ToDoAdapter;
@@ -25,7 +24,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
 
     View rootView;
 
-    MVCController mvcController;
+    MVCMainActivityController mvcMainActivityController;
 
     private MCVModelImplementor mvcModel;
 
@@ -40,7 +39,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
         rootView = LayoutInflater.from(context).inflate(R.layout.activity_main,continer);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
 
-        mvcController = new MVCController(mvcModel, this);
+        mvcMainActivityController = new MVCMainActivityController(mvcModel, this);
     }
 
 
@@ -56,14 +55,14 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
         buttonAddToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mvcController.onAddButtonClicked(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString());
+                mvcMainActivityController.onAddButtonClicked(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString());
             }
         });
     }
 
     @Override
     public void bindDataToView() {
-        mvcController.bindDatatoView();
+        mvcMainActivityController.bindDatatoView();
     }
 
     @Override
@@ -95,12 +94,13 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
 
     @Override
     public void onItemClicked(long position) {
-        Intent intent = new Intent(rootView.getContext(), DataManipulationActivity.class);
-        try{
-            intent.putExtra("todoId", mvcModel.getToDo(position).getId());
-        }catch (Exception e){
+        mvcMainActivityController.onToDoItemSelected(position);
+    }
 
-        }
+    @Override
+    public  void navigateToDataManipulationActivity(long id){
+        Intent intent = new Intent(rootView.getContext(), DataManipulationActivity.class);
+        intent.putExtra("todoId", id);
         rootView.getContext().startActivity(intent);
     }
 }

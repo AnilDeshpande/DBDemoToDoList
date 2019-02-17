@@ -3,11 +3,11 @@ package todolist.youtube.com.codetutor.controller;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.view.MainActivityViewImplementor;
 
-public class MVCController {
+public class MVCMainActivityController {
     MCVModelImplementor mvcModel;
     MainActivityViewImplementor mvcView;
 
-   public MVCController(MCVModelImplementor mvcModel,MainActivityViewImplementor mvcView){
+   public MVCMainActivityController(MCVModelImplementor mvcModel, MainActivityViewImplementor mvcView){
         this.mvcModel = mvcModel;
         this.mvcView = mvcView;
     }
@@ -32,7 +32,8 @@ public class MVCController {
        }
    }
 
-
-
+   public void onToDoItemSelected(long toDoId){
+       mvcView.navigateToDataManipulationActivity(toDoId);
+   }
 
 }
