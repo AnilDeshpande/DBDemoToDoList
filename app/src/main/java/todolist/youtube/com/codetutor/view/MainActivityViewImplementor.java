@@ -36,7 +36,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
     ToDoAdapter toDoAdapter;
 
     public MainActivityViewImplementor (Context context, ViewGroup continer){
-        rootView = LayoutInflater.from(context).inflate(R.layout.activity_main,continer);
+        rootView = LayoutInflater.from(context).inflate(R.layout.activity_fragment,continer);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
 
         mvcMainActivityController = new MVCMainActivityController(mvcModel, this);
