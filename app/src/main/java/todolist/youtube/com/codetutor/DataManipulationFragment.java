@@ -17,10 +17,9 @@ public class DataManipulationFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        
-        mvcView = new DataManipulatorViewImplementor(getActivity(), null, getIntent());
+        mvcView = new DataManipulatorViewImplementor(getActivity(), null, getArguments());
         mvcView.initViews();
-        return mvcView.getRootView();;
+        return mvcView.getRootView();
     }
 
     @Override

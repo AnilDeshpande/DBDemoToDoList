@@ -2,6 +2,7 @@ package todolist.youtube.com.codetutor.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,10 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
 
     long toDoId;
 
-    public DataManipulatorViewImplementor(Context context, ViewGroup container, Intent intent){
+    public DataManipulatorViewImplementor(Context context, ViewGroup container, Bundle bundle){
         rootView = LayoutInflater.from(context).inflate(R.layout.acivity_data_manipulate, container);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
-        toDoId = intent.getLongExtra("todoId",1);
+        toDoId = bundle.getLong("todoId",1);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
         mvcController = new MVCDataManipulationController(mvcModel,this);
     }
