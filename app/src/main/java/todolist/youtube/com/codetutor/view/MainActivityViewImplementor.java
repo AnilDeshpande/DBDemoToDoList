@@ -115,5 +115,9 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     @Override
     public void showErrorToast(String errorMessage) {
         Toast.makeText(rootView.getContext(),errorMessage, Toast.LENGTH_LONG).show();
+        if(errorMessage.equals("Empty To Do List")){
+            clearEditTexts();
+            textViewToDos.setText("");
+        }
     }
 }
