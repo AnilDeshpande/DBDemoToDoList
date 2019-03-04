@@ -18,6 +18,11 @@ public class MCVModelImplementor implements MVCModel {
         toDoItems = this.toDoListDBAdapter.getAllToDos();
     }
 
+    private void refresh(){
+        toDoItems.clear();
+        toDoItems = this.toDoListDBAdapter.getAllToDos();
+    }
+
     @Override
     public List<ToDo> getAllToDos() throws Exception{
         if(this.toDoItems!=null && this.toDoItems.size()>0){
@@ -64,10 +69,7 @@ public class MCVModelImplementor implements MVCModel {
         return modifySuccess;
     }
 
-    private void refresh(){
-        toDoItems.clear();
-        toDoItems = this.toDoListDBAdapter.getAllToDos();
-    }
+
 
 
 }
