@@ -74,7 +74,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
 
     @Override
     public void bindDataToView() {
-        mvcController.bindDatatoView();
+        mvcController.onViewLoaded();
     }
 
     @Override

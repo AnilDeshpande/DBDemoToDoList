@@ -12,7 +12,7 @@ public class MVCController {
         this.mvcView = mvcView;
     }
 
-   public void bindDatatoView(){
+   public void onViewLoaded(){
        try{
            mvcView.showAllToDos(mvcModel.getAllToDos());
        }catch (Exception e){
