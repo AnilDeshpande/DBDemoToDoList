@@ -1,39 +1,25 @@
 package todolist.youtube.com.codetutor.controller;
 
-import todolist.youtube.com.codetutor.model.MCVModelImplementor;
-import todolist.youtube.com.codetutor.view.MainActivityViewImplementor;
+import android.os.Bundle;
 
-public class MVCMainActivityController {
-    MCVModelImplementor mvcModel;
-    MainActivityViewImplementor mvcView;
+import todolist.youtube.com.codetutor.view.MVCMainActivityViewImplementor;
 
-   public MVCMainActivityController(MCVModelImplementor mvcModel, MainActivityViewImplementor mvcView){
-        this.mvcModel = mvcModel;
-        this.mvcView = mvcView;
+public class MVCMainActivityController implements FragmentActionListener{
+
+    MVCMainActivityViewImplementor activityViewImplementor;
+
+    public MVCMainActivityController(MVCMainActivityViewImplementor activityViewImplementor){
+        this.activityViewImplementor = activityViewImplementor;
     }
 
-   public void bindDatatoView(){
-       try{
-           mvcView.showAllToDos(mvcModel.getAllToDos());
-       }catch (Exception e){
-           mvcView.showErrorToast(e.getMessage());
-       }
+    public void onViewLoaded(){
+        this.activityViewImplementor.showMainScreen();
+    }
 
-   }
-
-   public void onAddButtonClicked(String toDoItem, String place) {
-       try{
-           boolean success = mvcModel.addToDoItem( toDoItem,  place);
-           if(success){
-               mvcView.updateViewonAdd(mvcModel.getAllToDos());
-           }
-       }catch (Exception e){
-           mvcView.showErrorToast(e.getMessage());
-       }
-   }
-
-   public void onToDoItemSelected(long toDoId){
-       mvcView.navigateToDataManipulationActivity(toDoId);
-   }
-
+    @Override
+    public void onActionPerformed(ACTION_PERFORMED actionPerformed, Bundle bundle) {
+        switch (actionPerformed){
+            case ON_ITEM_SELECTED: this.activityViewImplementor.showDataManipulationScreen(bundle.getLong("todoId")); break;
+        }
+    }
 }

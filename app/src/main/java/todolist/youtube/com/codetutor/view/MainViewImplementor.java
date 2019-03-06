@@ -2,6 +2,7 @@ package todolist.youtube.com.codetutor.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,16 +16,17 @@ import java.util.List;
 
 import todolist.youtube.com.codetutor.MyApplication;
 import todolist.youtube.com.codetutor.R;
-import todolist.youtube.com.codetutor.controller.MVCMainActivityController;
+import todolist.youtube.com.codetutor.controller.FragmentActionListener;
+import todolist.youtube.com.codetutor.controller.MVCMainViewController;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.view.adapters.ToDoAdapter;
 
-public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAdapter.ListItemClickListener {
+public class MainViewImplementor implements MVCMainView, ToDoAdapter.ListItemClickListener {
 
     View rootView;
 
-    MVCMainActivityController mvcMainActivityController;
+    MVCMainViewController mvcMainViewController;
 
     private MCVModelImplementor mvcModel;
 
@@ -35,13 +37,13 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
 
     ToDoAdapter toDoAdapter;
 
-    public MainActivityViewImplementor (Context context, ViewGroup continer){
-        rootView = LayoutInflater.from(context).inflate(R.layout.activity_fragment,continer);
+
+
+    public MainViewImplementor(Context context, ViewGroup continer){
+        rootView = LayoutInflater.from(context).inflate(R.layout.activity_fragment,continer,false);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
-
-        mvcMainActivityController = new MVCMainActivityController(mvcModel, this);
+        mvcMainViewController = new MVCMainViewController(mvcModel, this);
     }
-
 
     @Override
     public void initViews() {
@@ -55,14 +57,14 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
         buttonAddToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mvcMainActivityController.onAddButtonClicked(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString());
+                mvcMainViewController.onAddButtonClicked(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString());
             }
         });
     }
 
     @Override
     public void bindDataToView() {
-        mvcMainActivityController.bindDatatoView();
+        mvcMainViewController.bindDatatoView();
     }
 
     @Override
@@ -94,13 +96,6 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
 
     @Override
     public void onItemClicked(long position) {
-        mvcMainActivityController.onToDoItemSelected(position);
-    }
-
-    @Override
-    public  void navigateToDataManipulationActivity(long id){
-        Intent intent = new Intent(rootView.getContext(), DataManipulationActivity.class);
-        intent.putExtra("todoId", id);
-        rootView.getContext().startActivity(intent);
+        mvcMainViewController.onToDoItemSelected(position);
     }
 }

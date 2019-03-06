@@ -1,7 +1,6 @@
 package todolist.youtube.com.codetutor.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 
 import todolist.youtube.com.codetutor.MyApplication;
 import todolist.youtube.com.codetutor.R;
-import todolist.youtube.com.codetutor.controller.MVCDataManipulationController;
+import todolist.youtube.com.codetutor.controller.MVCDataManipulationViewController;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 
@@ -22,7 +21,7 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
 
     View rootView;
 
-    MVCDataManipulationController mvcController;
+    MVCDataManipulationViewController mvcController;
 
     private MCVModelImplementor mvcModel;
 
@@ -39,7 +38,7 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
         toDoId = bundle.getLong("todoId",1);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
-        mvcController = new MVCDataManipulationController(mvcModel,this);
+        mvcController = new MVCDataManipulationViewController(mvcModel,this);
     }
 
 

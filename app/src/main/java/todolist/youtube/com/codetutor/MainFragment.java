@@ -7,17 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import todolist.youtube.com.codetutor.view.MainActivityViewImplementor;
+import todolist.youtube.com.codetutor.view.MainViewImplementor;
 
 public class MainFragment extends Fragment {
 
-    MainActivityViewImplementor mvcView;
+    MainViewImplementor mvcView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        mvcView = new MainActivityViewImplementor(getActivity(),null);
+        mvcView = new MainViewImplementor(getActivity(),container);
         mvcView.getRootView();
         mvcView.initViews();
         return mvcView.getRootView();

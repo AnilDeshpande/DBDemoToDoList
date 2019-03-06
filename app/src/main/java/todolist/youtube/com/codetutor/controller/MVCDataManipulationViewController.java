@@ -4,12 +4,12 @@ import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.view.DataManipulatorViewImplementor;
 
 
-public class MVCDataManipulationController {
+public class MVCDataManipulationViewController {
 
     MCVModelImplementor mvcModel;
     DataManipulatorViewImplementor mvcView;
 
-    public MVCDataManipulationController(MCVModelImplementor mvcModel, DataManipulatorViewImplementor mvcView){
+    public MVCDataManipulationViewController(MCVModelImplementor mvcModel, DataManipulatorViewImplementor mvcView){
         this.mvcModel = mvcModel;
         this.mvcView = mvcView;
     }
