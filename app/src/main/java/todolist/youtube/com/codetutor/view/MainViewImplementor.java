@@ -40,7 +40,7 @@ public class MainViewImplementor implements MVCMainView, ToDoAdapter.ListItemCli
 
 
     public MainViewImplementor(Context context, ViewGroup continer){
-        rootView = LayoutInflater.from(context).inflate(R.layout.activity_fragment,continer,false);
+        rootView = LayoutInflater.from(context).inflate(R.layout.activity_fragment,null,false);
         mvcModel = new MCVModelImplementor(MyApplication.getToDoListDBAdapter());
         mvcMainViewController = new MVCMainViewController(mvcModel, this);
     }

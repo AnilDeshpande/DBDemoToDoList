@@ -23,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mainActivityViewImplementor.bindDataToView();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainActivityViewImplementor.unBindDataFromView();
     }
 }

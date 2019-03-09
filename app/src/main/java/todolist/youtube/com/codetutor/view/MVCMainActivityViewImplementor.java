@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,10 @@ public class MVCMainActivityViewImplementor implements MainActivityView {
         mvcMainActivityController.onViewLoaded();
     }
 
+    public void unBindDataFromView(){
+        mvcMainActivityController.onViewRemoved();
+    }
+
     @Override
     public void initViews() {
         fragmentContainer = (FrameLayout)rootView.findViewById(R.id.fragmentContainer);
@@ -58,9 +63,12 @@ public class MVCMainActivityViewImplementor implements MainActivityView {
     public void showDataManipulationScreen(long toDoId) {
         FragmentManager fragmentManager = activity.getFragmentManager();
         DataManipulationFragment dataManipulationFragment = new DataManipulationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putLong("todoId", toDoId);
+        dataManipulationFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainer,dataManipulationFragment,"maincontainer");
-        fragmentTransaction.commit();
         fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
