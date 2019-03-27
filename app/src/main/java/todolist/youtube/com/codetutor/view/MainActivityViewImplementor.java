@@ -84,26 +84,9 @@ public class MainActivityViewImplementor implements MVCMainActivityView, Observe
     }
 
     @Override
-    public void upDateViewOnRemove(List<ToDo> toDoList) {
-        this.showAllToDos(toDoList);
-        clearEditTexts();
-    }
-
-    @Override
-    public void updateViewOnModify(List<ToDo> toDoList) {
-        this.showAllToDos(toDoList);
-        clearEditTexts();
-    }
-
-    @Override
-    public void updateViewonAdd(List<ToDo> toDoList) {
-        this.showAllToDos(toDoList);
-        clearEditTexts();
-    }
-
-    @Override
     public void showAllToDos(List<ToDo> toDoList) {
         textViewToDos.setText(toDoList.toString());
+        clearEditTexts();
     }
 
     private void clearEditTexts(){
@@ -116,6 +99,10 @@ public class MainActivityViewImplementor implements MVCMainActivityView, Observe
     @Override
     public void showErrorToast(String errorMessage) {
         Toast.makeText(rootView.getContext(),errorMessage, Toast.LENGTH_LONG).show();
+        if(errorMessage.equals("Empty To Do List")){
+            clearEditTexts();
+            textViewToDos.setText("");
+        }
     }
 
     @Override
@@ -123,7 +110,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView, Observe
         try{
             this.showAllToDos(mvcModel.getAllToDos());
         }catch (Exception e){
-            Toast.makeText(rootView.getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
+            showErrorToast(e.getMessage());
         }
 
     }
