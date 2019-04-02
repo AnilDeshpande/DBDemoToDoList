@@ -41,9 +41,6 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
         mvcController = new MVCDataManipulationController(mvcModel,this);
     }
 
-
-
-
     @Override
     public void initViews() {
         textViewToBeModifiedToDoId  = (TextView)rootView.findViewById(R.id.textViewToBeModifiedToDoId);
@@ -78,7 +75,7 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
     }
 
     @Override
-    public void bindDataToView() {
+    public void showSelectedToDo() {
         try{
             toDo = mvcModel.getToDo(toDoId);
             textViewToBeModifiedToDoId.setText("Id: "+ toDo.getId());
@@ -89,6 +86,10 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
         }
     }
 
+    @Override
+    public void bindDataToView() {
+        mvcController.onViewLoaded();
+    }
 
     @Override
     public void showErrorToast(String errorMessage) {

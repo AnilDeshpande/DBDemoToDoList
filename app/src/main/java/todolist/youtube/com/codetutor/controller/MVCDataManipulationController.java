@@ -4,7 +4,7 @@ import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.view.DataManipulatorViewImplementor;
 
 
-public class MVCDataManipulationController {
+public class MVCDataManipulationController implements MVCController{
 
     MCVModelImplementor mvcModel;
     DataManipulatorViewImplementor mvcView;
@@ -12,6 +12,11 @@ public class MVCDataManipulationController {
     public MVCDataManipulationController(MCVModelImplementor mvcModel, DataManipulatorViewImplementor mvcView){
         this.mvcModel = mvcModel;
         this.mvcView = mvcView;
+    }
+
+    @Override
+    public void onViewLoaded() {
+        mvcView.showSelectedToDo();
     }
 
     public void onRemoveBottonClicked(long id){

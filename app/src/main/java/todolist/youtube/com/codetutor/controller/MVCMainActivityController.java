@@ -3,7 +3,7 @@ package todolist.youtube.com.codetutor.controller;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.view.MainActivityViewImplementor;
 
-public class MVCMainActivityController {
+public class MVCMainActivityController implements MVCController{
     MCVModelImplementor mvcModel;
     MainActivityViewImplementor mvcView;
 
@@ -12,14 +12,15 @@ public class MVCMainActivityController {
         this.mvcView = mvcView;
     }
 
-   public void bindDatatoView(){
-       try{
-           mvcView.showAllToDos(mvcModel.getAllToDos());
-       }catch (Exception e){
-           mvcView.showErrorToast(e.getMessage());
-       }
-
+   @Override
+   public void onViewLoaded() {
+        try{
+            mvcView.showAllToDos(mvcModel.getAllToDos());
+        }catch (Exception e){
+            mvcView.showErrorToast(e.getMessage());
+        }
    }
+
 
    public void onAddButtonClicked(String toDoItem, String place) {
        try{

@@ -63,7 +63,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
 
     @Override
     public void bindDataToView() {
-        mvcMainActivityController.bindDatatoView();
+        mvcMainActivityController.onViewLoaded();
     }
 
     @Override
