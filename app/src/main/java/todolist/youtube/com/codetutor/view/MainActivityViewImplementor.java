@@ -83,26 +83,31 @@ public class MainActivityViewImplementor implements MVCMainActivityView {
     }
 
     @Override
-    public void upDateViewOnRemove(List<ToDo> toDoList) {
-        this.showAllToDos(toDoList);
+    public void upDateViewOnRemove() {
+        this.showAllToDos();
         clearEditTexts();
     }
 
     @Override
-    public void updateViewOnModify(List<ToDo> toDoList) {
-        this.showAllToDos(toDoList);
+    public void updateViewOnModify() {
+        this.showAllToDos();
         clearEditTexts();
     }
 
     @Override
-    public void updateViewonAdd(List<ToDo> toDoList) {
-        this.showAllToDos(toDoList);
+    public void updateViewOnAdd() {
+        this.showAllToDos();
         clearEditTexts();
     }
 
     @Override
-    public void showAllToDos(List<ToDo> toDoList) {
-        textViewToDos.setText(toDoList.toString());
+    public void showAllToDos() {
+        try{
+            textViewToDos.setText(mvcModel.getAllToDos().toString());
+        }catch (Exception e){
+            showErrorToast(e.getMessage());
+        }
+
     }
 
     private void clearEditTexts(){

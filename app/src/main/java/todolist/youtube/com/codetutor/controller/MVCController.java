@@ -14,7 +14,7 @@ public class MVCController {
 
    public void onViewLoaded(){
        try{
-           mvcView.showAllToDos(mvcModel.getAllToDos());
+           mvcView.showAllToDos();
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
        }
@@ -25,7 +25,7 @@ public class MVCController {
        try{
            boolean success = mvcModel.addToDoItem( toDoItem,  place);
            if(success){
-               mvcView.updateViewonAdd(mvcModel.getAllToDos());
+               mvcView.updateViewOnAdd();
            }
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
@@ -36,7 +36,7 @@ public class MVCController {
        try{
            boolean success = mvcModel.removeToDoItem(id);
            if(success){
-               mvcView.upDateViewOnRemove(mvcModel.getAllToDos());
+               mvcView.upDateViewOnRemove();
            }
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
@@ -48,7 +48,7 @@ public class MVCController {
        try{
            boolean success = mvcModel.modifyToDoItem(id,newValue);
            if(success){
-               mvcView.updateViewOnModify(mvcModel.getAllToDos());
+               mvcView.updateViewOnModify();
            }
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
