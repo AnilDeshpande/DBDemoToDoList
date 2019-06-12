@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.MyApplication;
@@ -91,7 +92,15 @@ public class MainViewImplementor implements MVCMainView, ToDoAdapter.ListItemCli
 
     @Override
     public void showErrorToast(String errorMessage) {
+        if(errorMessage.equals("Empty To Do List")){
+            clearListView();
+        }
         Toast.makeText(rootView.getContext(),errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    private void clearListView(){
+        toDoAdapter = new ToDoAdapter(rootView.getContext(), new ArrayList<ToDo>(), this);
+        recyclerView.setAdapter(toDoAdapter);
     }
 
     @Override
