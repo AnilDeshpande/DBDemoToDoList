@@ -97,7 +97,7 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
     }
 
     @Override
-    public void showRemovalSuccess() {
+    public void updateViewOnRemove() {
         textViewToBeModifiedToDoId.setText("");
         textViewToBeModifiedToDo.setText("");
         textViewToBeModifiedToDoPlace.setText("");
@@ -105,7 +105,7 @@ public class DataManipulatorViewImplementor implements MVCDataManipulatorView{
     }
 
     @Override
-    public void showUpdatedValue(ToDo toDo) {
+    public void updateViewOnModify(ToDo toDo) {
         this.toDo = toDo;
         textViewToBeModifiedToDo.setText(this.toDo.getToDo());
         Toast.makeText(rootView.getContext(),"Successfully updated", Toast.LENGTH_LONG).show();

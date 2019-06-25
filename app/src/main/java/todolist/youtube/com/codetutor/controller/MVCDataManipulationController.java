@@ -23,7 +23,7 @@ public class MVCDataManipulationController implements MVCController{
        try{
            boolean success = mvcModel.removeToDoItem(id);
            if(success){
-               mvcView.showRemovalSuccess();
+               mvcView.updateViewOnRemove();
            }
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
@@ -35,7 +35,7 @@ public class MVCDataManipulationController implements MVCController{
        try{
            boolean success = mvcModel.modifyToDoItem(id,newValue);
            if(success){
-               mvcView.showUpdatedValue(mvcModel.getToDo(id));
+               mvcView.updateViewOnModify(mvcModel.getToDo(id));
            }
        }catch (Exception e){
            mvcView.showErrorToast(e.getMessage());
