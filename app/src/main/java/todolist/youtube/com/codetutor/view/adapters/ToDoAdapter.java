@@ -36,6 +36,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
     public ToDoAdapter.ToDoViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         ToDoListItemMVCImpl toDoListItemMVC = new ToDoListItemMVCImpl((LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE ),parent);
+        toDoListItemMVC.initViews();
         toDoListItemMVC.setListItemClickListener(this);
         return new ToDoViewViewHolder(toDoListItemMVC);
     }

@@ -30,10 +30,6 @@ public class ToDoListItemMVCImpl implements MVCListItemView {
 
     public ToDoListItemMVCImpl(LayoutInflater layoutInflater, ViewGroup parent){
         rootView = layoutInflater.inflate(R.layout.todo_row_item, parent, false);
-        layoutContainer = (LinearLayout)rootView.findViewById(R.id.layoutContainer);
-        textViewId = (TextView)rootView.findViewById(R.id.textViewId);
-        textViewToDo = (TextView)rootView.findViewById(R.id.textViewToDo);
-        textViewPlace = (TextView)rootView.findViewById(R.id.textViewPlace);
 
     }
 
