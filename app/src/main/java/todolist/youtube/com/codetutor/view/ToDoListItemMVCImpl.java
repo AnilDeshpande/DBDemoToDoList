@@ -9,7 +9,7 @@ import android.widget.TextView;
 import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 
-public class ToDoListItemMVCImpl implements MVCView {
+public class ToDoListItemMVCImpl implements MVCListItemView {
 
     View rootView;
     ToDo toDo;
@@ -30,6 +30,10 @@ public class ToDoListItemMVCImpl implements MVCView {
 
     public ToDoListItemMVCImpl(LayoutInflater layoutInflater, ViewGroup parent){
         rootView = layoutInflater.inflate(R.layout.todo_row_item, parent, false);
+        layoutContainer = (LinearLayout)rootView.findViewById(R.id.layoutContainer);
+        textViewId = (TextView)rootView.findViewById(R.id.textViewId);
+        textViewToDo = (TextView)rootView.findViewById(R.id.textViewToDo);
+        textViewPlace = (TextView)rootView.findViewById(R.id.textViewPlace);
 
     }
 
@@ -47,10 +51,11 @@ public class ToDoListItemMVCImpl implements MVCView {
     }
 
     @Override
-    public void bindDataToView() {
-        textViewId.setText("Id: "+toDo.getId());
-        textViewToDo.setText("To Do: "+toDo.getToDo());
-        textViewPlace.setText("Place: "+toDo.getPlace());
+    public void bindDataToView(Object object) {
+        this.toDo = (ToDo)object;
+        textViewId.setText("Id: "+this.toDo.getId());
+        textViewToDo.setText("To Do: "+this.toDo.getToDo());
+        textViewPlace.setText("Place: "+this.toDo.getPlace());
         layoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

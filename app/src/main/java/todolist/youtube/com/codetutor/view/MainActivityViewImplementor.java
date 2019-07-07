@@ -22,7 +22,7 @@ import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.MCVModelImplementor;
 import todolist.youtube.com.codetutor.view.adapters.ToDoAdapter;
 
-public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAdapter.ListItemClickListener {
+public class MainActivityViewImplementor implements MVCMainActivityView, ToDoListItemMVCImpl.ListItemClickListener {
 
     View rootView;
 
@@ -80,7 +80,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
 
     @Override
     public void showAllToDos(List<ToDo> toDoList) {
-        toDoAdapter = new ToDoAdapter(rootView.getContext(),toDoList, this);
+        toDoAdapter = new ToDoAdapter(rootView.getContext(),toDoList,this);
         recyclerView.setAdapter(toDoAdapter);
     }
 
@@ -98,7 +98,7 @@ public class MainActivityViewImplementor implements MVCMainActivityView, ToDoAda
     }
 
     private void clearListView(){
-        toDoAdapter = new ToDoAdapter(rootView.getContext(), new ArrayList<ToDo>(), this);
+        toDoAdapter = new ToDoAdapter(rootView.getContext(), new ArrayList<ToDo>(),this);
         recyclerView.setAdapter(toDoAdapter);
     }
 

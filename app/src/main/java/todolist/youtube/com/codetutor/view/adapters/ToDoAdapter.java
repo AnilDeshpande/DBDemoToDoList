@@ -3,6 +3,7 @@ package todolist.youtube.com.codetutor.view.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,38 +18,32 @@ import todolist.youtube.com.codetutor.view.MVCDataManipulatorView;
 import todolist.youtube.com.codetutor.view.MVCView;
 import todolist.youtube.com.codetutor.view.ToDoListItemMVCImpl;
 
-public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHolder> {
+public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHolder> implements ToDoListItemMVCImpl.ListItemClickListener {
+
+    private static final String TAG = ToDoAdapter.class.getSimpleName();
 
     private Context context;
     private List<ToDo> todos;
+    private ToDoListItemMVCImpl.ListItemClickListener listItemClickListener;
 
-    public ToDoAdapter(Context context, List<ToDo> toDos){
+    public ToDoAdapter(Context context, List<ToDo> toDos, ToDoListItemMVCImpl.ListItemClickListener listItemClickListener){
         this.context = context;
         this.todos = toDos;
+        this.listItemClickListener = listItemClickListener;
     }
 
     @Override
     public ToDoAdapter.ToDoViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        ToDoListItemMVCImpl toDoListItemMVC = new ToDoListItemMVCImpl()
-
-        return new ToDoViewViewHolder(view);
+        ToDoListItemMVCImpl toDoListItemMVC = new ToDoListItemMVCImpl((LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE ),parent);
+        toDoListItemMVC.setListItemClickListener(this);
+        return new ToDoViewViewHolder(toDoListItemMVC);
     }
 
     @Override
     public void onBindViewHolder(ToDoAdapter.ToDoViewViewHolder holder, final int position) {
         final ToDo toDo = todos.get(position);
-        holder.textViewId.setText("Id: "+toDo.getId());
-        holder.textViewToDo.setText("To Do: "+toDo.getToDo());
-        holder.textViewPlace.setText("Place: "+toDo.getPlace());
-        holder.layoutContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listItemClickListener!=null){
-                    listItemClickListener.onItemClicked(toDo.getId());
-                }
-            }
-        });
+        holder.listItemMVC.bindDataToView(toDo);
     }
 
     @Override
@@ -59,6 +54,11 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
     @Override
     public int getItemCount() {
         return todos.size();
+    }
+
+    @Override
+    public void onItemClicked(long position) {
+        listItemClickListener.onItemClicked(position);
     }
 
     class ToDoViewViewHolder extends RecyclerView.ViewHolder{
