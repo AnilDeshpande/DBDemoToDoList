@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "todolist.youtube.com.codetutor"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -32,6 +32,10 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     implementation 'com.android.support:design:26.0.0-alpha1'
     implementation 'com.android.support:cardview-v7:26.0.0-alpha1'
-    androidTestImplementation 'org.mockito:mockito-core:2.7.22'
-    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
+    implementation 'org.testifyproject.mock:mockito:1.0.6'
+    implementation 'com.google.dexmaker:dexmaker:1.2'
+    implementation 'com.google.dexmaker:dexmaker-mockito:1.2'
+    implementation 'org.hamcrest:hamcrest:2.1'
+    implementation 'org.mockito:mockito-all:2.0.2-beta'
+
 }
