@@ -19,18 +19,14 @@ public class ToDoListItemMVCImpl implements MVCListItemView {
 
     ListItemClickListener listItemClickListener;
 
-    public interface ListItemClickListener{
-        void onItemClicked(long position);
-    }
-
-    public void setListItemClickListener(ListItemClickListener listItemClickListener){
-        this.listItemClickListener = listItemClickListener;
-    }
-
 
     public ToDoListItemMVCImpl(LayoutInflater layoutInflater, ViewGroup parent){
         rootView = layoutInflater.inflate(R.layout.todo_row_item, parent, false);
+    }
 
+    @Override
+    public void setListItemClickListener(ListItemClickListener listener) {
+        this.listItemClickListener = listener;
     }
 
     @Override

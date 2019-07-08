@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 public class MVCViewFactory {
 
     public enum VIEW_TYPE{
-        MAIN_VIEW_TYPE, MANIPULATION_VIEW_TYPE
+        MAIN_VIEW_TYPE, MANIPULATION_VIEW_TYPE;
     }
 
     public static MVCView getMVCView(VIEW_TYPE viewType, Context context, ViewGroup viewGroup, Intent intent){

@@ -14,19 +14,18 @@ import java.util.List;
 
 import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
-import todolist.youtube.com.codetutor.view.MVCDataManipulatorView;
-import todolist.youtube.com.codetutor.view.MVCView;
+import todolist.youtube.com.codetutor.view.MVCListItemView.ListItemClickListener;
 import todolist.youtube.com.codetutor.view.ToDoListItemMVCImpl;
 
-public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHolder> implements ToDoListItemMVCImpl.ListItemClickListener {
+public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHolder> implements ListItemClickListener {
 
     private static final String TAG = ToDoAdapter.class.getSimpleName();
 
     private Context context;
     private List<ToDo> todos;
-    private ToDoListItemMVCImpl.ListItemClickListener listItemClickListener;
+    private ListItemClickListener listItemClickListener;
 
-    public ToDoAdapter(Context context, List<ToDo> toDos, ToDoListItemMVCImpl.ListItemClickListener listItemClickListener){
+    public ToDoAdapter(Context context, List<ToDo> toDos, ListItemClickListener listItemClickListener){
         this.context = context;
         this.todos = toDos;
         this.listItemClickListener = listItemClickListener;
@@ -34,7 +33,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
 
     @Override
     public ToDoAdapter.ToDoViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         ToDoListItemMVCImpl toDoListItemMVC = new ToDoListItemMVCImpl((LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE ),parent);
         toDoListItemMVC.initViews();
         toDoListItemMVC.setListItemClickListener(this);
@@ -70,7 +68,5 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
             super(view.getRootView());
             listItemMVC = view;
         }
-
-
     }
 }
