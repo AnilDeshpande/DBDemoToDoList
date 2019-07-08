@@ -9,7 +9,7 @@ import android.widget.TextView;
 import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 
-public class ToDoListItemMVCImpl implements MVCListItemView {
+public class ToDoListItemMVCImpl implements MVCListItemView<ToDo> {
 
     View rootView;
     ToDo toDo;
@@ -43,8 +43,8 @@ public class ToDoListItemMVCImpl implements MVCListItemView {
     }
 
     @Override
-    public void bindDataToView(Object object) {
-        this.toDo = (ToDo)object;
+    public void bindDataToView(ToDo object) {
+        this.toDo = object;
         textViewId.setText("Id: "+this.toDo.getId());
         textViewToDo.setText("To Do: "+this.toDo.getToDo());
         textViewPlace.setText("Place: "+this.toDo.getPlace());
