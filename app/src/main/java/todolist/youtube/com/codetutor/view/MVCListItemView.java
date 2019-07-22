@@ -4,13 +4,13 @@ import android.view.View;
 
 public interface MVCListItemView<T> {
 
-    public interface ListItemClickListener{
+    interface ListItemClickListener{
         void onItemClicked(long position);
     }
 
-    public void setListItemClickListener(ListItemClickListener listener);
+    void setListItemClickListener(ListItemClickListener listener);
 
-    public View getRootView();
-    public void initViews();
-    public void bindDataToView(T object);
+    View getRootView();
+    void initViews();
+    void bindDataToView(T object);
 }
