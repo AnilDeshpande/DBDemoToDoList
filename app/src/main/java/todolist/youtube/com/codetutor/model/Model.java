@@ -4,7 +4,7 @@ import java.util.List;
 
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 
-public interface MVCModel {
+public interface Model {
 
     public List<ToDo> getAllToDos() throws Exception;
     public ToDo getToDo(long id) throws Exception;

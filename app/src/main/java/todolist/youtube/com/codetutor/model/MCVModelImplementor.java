@@ -3,11 +3,10 @@ package todolist.youtube.com.codetutor.model;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
-import todolist.youtube.com.codetutor.model.MVCModel;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 
-public class MCVModelImplementor implements MVCModel {
+public class MCVModelImplementor implements Model {
 
     ToDoListDBAdapter toDoListDBAdapter;
 
