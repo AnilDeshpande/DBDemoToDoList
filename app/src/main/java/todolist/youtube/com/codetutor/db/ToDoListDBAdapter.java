@@ -102,6 +102,18 @@ public class ToDoListDBAdapter {
         return toDoList;
     }
 
+    public ToDo getToDo(long id) throws Exception{
+        ToDo toDo = null;
+        Cursor cursor = sqLliteDatabase.query(TABLE_TODO,new String[]{COLUMN_TODO_ID,COLUMN_TODO, COLUMN_PLACE},COLUMN_TODO_ID+" = "+id,null,null,null,null,null);
+        if(cursor!=null &cursor.getCount()>0){
+            cursor.moveToFirst();
+            toDo=new ToDo(cursor.getLong(0),cursor.getString(1), cursor.getString(2));
+        }else {
+            throw new Exception("No Task found");
+        }
+        return toDo;
+    }
+
     private static class ToDoListDBHelper extends SQLiteOpenHelper{
 
         public ToDoListDBHelper(Context context, String databaseName, SQLiteDatabase.CursorFactory factory, int dbVersion){
