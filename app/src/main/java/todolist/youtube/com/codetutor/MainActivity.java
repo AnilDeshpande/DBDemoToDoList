@@ -15,15 +15,13 @@ import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private EditText editTextNewToDoString, editTextToDoId, editTextNewToDo, editTextPlace;
-    private TextView textViewToDos;
-    private Button buttonAddToDo, buttonRemoveToDo, buttonModifyToDo;
+    private EditText editTextNewToDoString, editTextNewToDo, editTextPlace;
+
+    private Button buttonAddToDo;
 
     private ToDoListDBAdapter toDoListDBAdapter;
 
     private List<ToDo> toDos;
-
-
 
 
     @Override
@@ -40,19 +38,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         editTextNewToDoString=(EditText)findViewById(R.id.editTextNewToDoString);
-        editTextToDoId=(EditText)findViewById(R.id.editTextToDoId);
+
         editTextNewToDo=(EditText)findViewById(R.id.editTextNewToDo);
         editTextPlace=(EditText)findViewById(R.id.editTextPlace);
 
-        textViewToDos=(TextView)findViewById(R.id.textViewToDos);
-
-
         buttonAddToDo=(Button)findViewById(R.id.buttonAddToDo);
-        buttonRemoveToDo=(Button)findViewById(R.id.buttonRemoveToDo);
-        buttonModifyToDo=(Button)findViewById(R.id.buttonModifyToDo);
-
-        buttonModifyToDo.setOnClickListener(this);
-        buttonRemoveToDo.setOnClickListener(this);
         buttonAddToDo.setOnClickListener(this);
 
     }
