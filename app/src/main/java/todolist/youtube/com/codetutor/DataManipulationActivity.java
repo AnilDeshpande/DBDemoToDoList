@@ -30,7 +30,13 @@ public class DataManipulationActivity extends AppCompatActivity{
 
         toDoId = getIntent().getLongExtra("todoId",1);
 
+
         toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getApplicationContext());
+        try{
+            toDo = toDoListDBAdapter.getToDo(toDoId);
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
 
         textViewToBeModifiedToDoId  = (TextView)findViewById(R.id.textViewToBeModifiedToDoId);
@@ -75,7 +81,7 @@ public class DataManipulationActivity extends AppCompatActivity{
 
     private void removeToDo(){
         try{
-            toDoListDBAdapter.delete(Integer.parseInt(textViewToBeModifiedToDoId.getText().toString()));
+            toDoListDBAdapter.delete((int)toDoId);
             updateViewOnRemove();
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -83,15 +89,15 @@ public class DataManipulationActivity extends AppCompatActivity{
     }
 
     private void modifyToDo(){
-        int id=Integer.parseInt(textViewToBeModifiedToDoId.getText().toString());
         String newToDO=editTextNewToDo.getText().toString();
         try{
-            toDoListDBAdapter.modify(id,newToDO);
-            toDo.setToDo(newToDO);
+            toDoListDBAdapter.modify((int) toDo.getId(),newToDO);
+            toDo = toDoListDBAdapter.getToDo(toDo.getId());
             showSelectedToDo(toDo);
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public void showSelectedToDo(ToDo toDo) {

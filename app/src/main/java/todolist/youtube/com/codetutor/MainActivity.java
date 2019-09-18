@@ -3,6 +3,7 @@ package todolist.youtube.com.codetutor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.bean.ToDo;
@@ -19,7 +21,7 @@ import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ToDoAdapter.ListItemClickListener {
 
-    private EditText editTextNewToDoString, editTextNewToDo, editTextPlace;
+    private EditText editTextNewToDoString, editTextPlace;
 
     private Button buttonAddToDo;
 
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         editTextNewToDoString=(EditText)findViewById(R.id.editTextNewToDoString);
 
-        editTextNewToDo=(EditText)findViewById(R.id.editTextNewToDo);
         editTextPlace=(EditText)findViewById(R.id.editTextPlace);
 
         buttonAddToDo=(Button)findViewById(R.id.buttonAddToDo);
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.buttonAddToDo: addNewToDo(); break;
+            case R.id.buttonAddToDo:
+                addNewToDo(); break;
             default: break;
         }
     }
@@ -80,18 +82,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             recyclerView.setAdapter(toDoAdapter);
         }catch (Exception e){
             Toast.makeText(this,e.getMessage(), Toast.LENGTH_LONG).show();
+            toDos.clear();
+            toDoAdapter = new ToDoAdapter(this ,toDos, this);
+            recyclerView.setAdapter(toDoAdapter);
         }
     }
 
 
 
     private void addNewToDo(){
-        try{
-            toDoListDBAdapter.insert(editTextNewToDoString.getText().toString(), editTextPlace.getText().toString());
-        }catch (Exception e){
-            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        String newToDoString = editTextNewToDoString.getText().toString();
+        String newPlace = editTextPlace.getText().toString();
+        if(TextUtils.isEmpty(newToDoString) && TextUtils.isEmpty(newPlace)){
+            Toast.makeText(MainActivity.this, "Fiends are empty", Toast.LENGTH_SHORT).show();
+        }else{
+            try{
+                toDoListDBAdapter.insert( newToDoString, newPlace);
+            }catch (Exception e){
+                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            setNewList();
+            clearEditTexts();
         }
-        setNewList();
+
     }
 
     private List<ToDo> getToDoListString() throws Exception{
@@ -102,8 +115,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemClicked(long position) {
-        Intent newctivityIntent = new Intent(this, DataManipulationActivity.class);
-        newctivityIntent.putExtra("todoId", position);
-        startActivity(newctivityIntent);
+        Intent newActivityIntent = new Intent(this, DataManipulationActivity.class);
+        newActivityIntent.putExtra("todoId", position);
+        startActivity(newActivityIntent);
+    }
+
+    private void clearEditTexts(){
+        editTextNewToDoString.setText("");
+        editTextPlace.setText("");
     }
 }
