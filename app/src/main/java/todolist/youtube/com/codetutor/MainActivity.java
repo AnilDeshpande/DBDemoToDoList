@@ -82,9 +82,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             recyclerView.setAdapter(toDoAdapter);
         }catch (Exception e){
             Toast.makeText(this,e.getMessage(), Toast.LENGTH_LONG).show();
-            toDos.clear();
-            toDoAdapter = new ToDoAdapter(this ,toDos, this);
-            recyclerView.setAdapter(toDoAdapter);
+            if(toDos!=null){
+                toDos.clear();
+                toDoAdapter = new ToDoAdapter(this ,toDos, this);
+                recyclerView.setAdapter(toDoAdapter);
+            }
         }
     }
 
