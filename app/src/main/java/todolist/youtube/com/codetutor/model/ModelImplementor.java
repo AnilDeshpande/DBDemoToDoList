@@ -6,13 +6,13 @@ import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 import todolist.youtube.com.codetutor.model.bean.ToDo;
 import todolist.youtube.com.codetutor.model.db.ToDoListDBAdapter;
 
-public class MCVModelImplementor implements Model {
+public class ModelImplementor implements Model {
 
     ToDoListDBAdapter toDoListDBAdapter;
 
     List<ToDo> toDoItems;
 
-    public MCVModelImplementor(ToDoListDBAdapter toDoListDBAdapter){
+    public ModelImplementor(ToDoListDBAdapter toDoListDBAdapter){
         this.toDoListDBAdapter = toDoListDBAdapter;
         toDoItems = this.toDoListDBAdapter.getAllToDos();
     }

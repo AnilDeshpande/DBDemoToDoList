@@ -58,6 +58,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/todolist/youtube/com/codetutor/model/ModelImplementor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/todolist/youtube/com/codetutor/presenter/DataManipulationScreenPresenterImp.java">
           <value>
             <set />

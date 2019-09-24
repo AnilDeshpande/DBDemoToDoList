@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Codes-DBDemoToDoList.iml" filepath="$PROJECT_DIR$/Codes-DBDemoToDoList.iml" />
       <module fileurl="file://$PROJECT_DIR$/DBDemoToDoList.iml" filepath="$PROJECT_DIR$/DBDemoToDoList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/DBDemoToDoList-app.iml" filepath="$PROJECT_DIR$/app/DBDemoToDoList-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
