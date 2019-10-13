@@ -66,7 +66,7 @@ public class ToDoListDBAdapter {
         return success;
     }
 
-    public boolean delete(int taskId) throws Exception{
+    public boolean delete(long taskId) throws Exception{
         boolean success = sqLliteDatabase.delete(TABLE_TODO, COLUMN_TODO_ID+" = "+taskId,null)>0;
         if(!success){
             throw new ToDoNotFoundException("Id is wrong");
@@ -74,7 +74,7 @@ public class ToDoListDBAdapter {
        return  success;
     }
 
-    public boolean modify(int taskId, String newToDoItem) throws Exception{
+    public boolean modify(long taskId, String newToDoItem) throws Exception{
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_TODO,newToDoItem);
         boolean success = sqLliteDatabase.update(TABLE_TODO,contentValues, COLUMN_TODO_ID+" = "+taskId,null)>0;
@@ -96,7 +96,7 @@ public class ToDoListDBAdapter {
 
             }
         } else {
-          throw new Exception("List Emptry");
+          throw new Exception("List Empty");
         }
         cursor.close();
         return toDoList;
