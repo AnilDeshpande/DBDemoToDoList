@@ -33,13 +33,13 @@
         android:id="@+id/buttonAddToDo"
         android:layout_gravity="right"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerListViewToDos"
         android:layout_marginTop="20dp"
         android:padding="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>
