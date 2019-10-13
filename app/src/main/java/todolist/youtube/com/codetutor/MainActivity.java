@@ -51,10 +51,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+
         mainActivityViewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
             @Override
             public void onChanged(List<ToDo> toDos) {
                 setNewList(toDos);
+            }
+        });
+
+        mainActivityViewModel.getErrorStatus().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+                toDoAdapter.notifyDataSetChanged();
             }
         });
 
@@ -103,22 +112,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String newToDoString = editTextNewToDoString.getText().toString();
         String newPlace = editTextPlace.getText().toString();
         if(TextUtils.isEmpty(newToDoString) && TextUtils.isEmpty(newPlace)){
-            Toast.makeText(MainActivity.this, "Fiends are empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Fields are empty", Toast.LENGTH_SHORT).show();
         }else{
-            try{
-                toDoListDBAdapter.insert( newToDoString, newPlace);
-            }catch (Exception e){
-                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            mainActivityViewModel.addToDoList(newToDoString, newPlace);
+            toDoAdapter.notifyDataSetChanged();
             clearEditTexts();
         }
 
-    }
-
-    private List<ToDo> getToDoListString() throws Exception{
-        List<ToDo> toDos=null;
-        toDos=toDoListDBAdapter.getAllToDos();
-        return toDos;
     }
 
     @Override

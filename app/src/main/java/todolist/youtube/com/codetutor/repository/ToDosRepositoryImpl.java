@@ -11,7 +11,7 @@ import todolist.youtube.com.codetutor.bean.ToDo;
 import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
 import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 
-class ToDosRepositoryImpl implements ToDosRepository {
+public class ToDosRepositoryImpl implements ToDosRepository {
 
     LiveData<List<ToDo>> toDoItems;
 

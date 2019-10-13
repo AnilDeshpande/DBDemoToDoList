@@ -4,15 +4,48 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.bean.ToDo;
+import todolist.youtube.com.codetutor.repository.ToDosRepository;
+import todolist.youtube.com.codetutor.repository.ToDosRepositoryImpl;
 
 public class MainActivityViewModel extends ViewModel  {
 
-    private MutableLiveData<List<ToDo>> toDoList;
+
+    private ToDosRepository toDosRepository = ToDosRepositoryImpl.getInstance();
+
+
+    private MutableLiveData<List<ToDo>> toDoList = null;
+    private MutableLiveData<String> errorMessage = null;
+
 
     public LiveData<List<ToDo>> getToDoList(){
+        try{
+            toDoList = toDosRepository.getAllToDos();
+        }catch (Exception e){
+            errorMessage = new MutableLiveData<>();
+            errorMessage.setValue(e.getMessage());
+            toDoList = new MutableLiveData<List<ToDo>>();
+            toDoList.setValue(new ArrayList<ToDo>());
+        }
         return toDoList;
+    }
+
+    public void addToDoList(String todoItem, String place){
+        try{
+           boolean success = toDosRepository.addToDoItem(todoItem, place);
+           if(success) {
+                toDoList = toDosRepository.getAllToDos();
+            }
+        }catch (Exception e){
+            errorMessage = new MutableLiveData<>();
+            errorMessage.setValue(e.getMessage());
+        }
+    }
+
+    public LiveData<String> getErrorStatus(){
+        return errorMessage;
     }
 }
