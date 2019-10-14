@@ -20,15 +20,16 @@ public class MainActivityViewModel extends ViewModel  {
     private MutableLiveData<List<ToDo>> toDoList = null;
     private MutableLiveData<String> errorMessage = null;
 
+    public MainActivityViewModel(){
+        toDoList = new MutableLiveData<List<ToDo>>();
+        errorMessage = new MutableLiveData<>();
+    }
 
     public LiveData<List<ToDo>> getToDoList(){
-        errorMessage = new MutableLiveData<>();
         try{
             toDoList = toDosRepository.getAllToDos();
         }catch (Exception e){
-            errorMessage = new MutableLiveData<>();
             errorMessage.setValue(e.getMessage());
-            toDoList = new MutableLiveData<List<ToDo>>();
             toDoList.setValue(new ArrayList<ToDo>());
         }
         return toDoList;
@@ -37,9 +38,7 @@ public class MainActivityViewModel extends ViewModel  {
     public void addToDoList(String todoItem, String place){
         try{
             toDosRepository.addToDoItem(todoItem, place);
-            toDoList = toDosRepository.getAllToDos();
         }catch (Exception e){
-            errorMessage = new MutableLiveData<>();
             errorMessage.setValue(e.getMessage());
         }
     }

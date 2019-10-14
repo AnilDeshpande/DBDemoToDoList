@@ -14,7 +14,6 @@ import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 public class ToDosRepositoryImpl implements ToDosRepository {
 
     MutableLiveData<List<ToDo>> toDoItems;
-
     ToDoListDBAdapter toDoListDBAdapter;
 
     private static  ToDosRepository instance = null;
@@ -40,7 +39,7 @@ public class ToDosRepositoryImpl implements ToDosRepository {
     }
 
     @Override
-    public boolean addToDoItem(String toDoItem, String place) throws Exception{
+    public void addToDoItem(String toDoItem, String place) throws Exception{
         boolean addSuccess = toDoListDBAdapter.insert(toDoItem, place);
         if (!addSuccess){
             throw new Exception("Some thing went wrong!!!");
@@ -50,30 +49,26 @@ public class ToDosRepositoryImpl implements ToDosRepository {
                 toDoItems.setValue(toDoListDBAdapter.getAllToDos());
             }else {
                 toDoItems.getValue().clear();
-                toDoItems.getValue().addAll(toDoListDBAdapter.getAllToDos());
+                toDoItems.setValue(toDoListDBAdapter.getAllToDos());
             }
         }
-        return addSuccess;
     }
 
     @Override
-    public boolean removeToDoItem(long id) throws Exception{
+    public void removeToDoItem(long id) throws Exception{
 
         boolean deleteSuccess = toDoListDBAdapter.delete(id);
         if(!deleteSuccess){
             throw new ToDoNotFoundException("Id is wrong");
         }
-        return deleteSuccess;
-
     }
 
     @Override
-    public boolean modifyToDoItem(long id, String newToDoValuel) throws Exception{
+    public void modifyToDoItem(long id, String newToDoValuel) throws Exception{
         boolean modifySuccess = toDoListDBAdapter.modify(id,newToDoValuel);
         if(!modifySuccess){
             throw new ToDoNotFoundException("Id is wrong");
         }
-        return modifySuccess;
     }
 
     public ToDo getToDo(long id) throws Exception{
