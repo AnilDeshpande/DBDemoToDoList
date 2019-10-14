@@ -13,7 +13,7 @@ import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 
 public class ToDosRepositoryImpl implements ToDosRepository {
 
-    LiveData<List<ToDo>> toDoItems;
+    MutableLiveData<List<ToDo>> toDoItems;
 
     ToDoListDBAdapter toDoListDBAdapter;
 
@@ -28,14 +28,15 @@ public class ToDosRepositoryImpl implements ToDosRepository {
 
     private ToDosRepositoryImpl(){
         this.toDoListDBAdapter = MyApplication.getToDoListDBAdapter();
+        this.toDoItems = new MutableLiveData<>();
+        this.toDoItems.setValue(new ArrayList<ToDo>());
     }
 
     @Override
     public MutableLiveData<List<ToDo>> getAllToDos() throws Exception{
-        MutableLiveData<List<ToDo>> dataSet = new MutableLiveData<>();
-        toDoItems = dataSet;
-        dataSet.setValue(toDoListDBAdapter.getAllToDos());
-        return dataSet;
+        toDoItems = new MutableLiveData<>();
+        toDoItems.setValue(toDoListDBAdapter.getAllToDos());
+        return toDoItems;
     }
 
     @Override
@@ -43,6 +44,14 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         boolean addSuccess = toDoListDBAdapter.insert(toDoItem, place);
         if (!addSuccess){
             throw new Exception("Some thing went wrong!!!");
+        }else{
+            if(toDoItems.getValue()==null){
+                toDoItems = new MutableLiveData<>();
+                toDoItems.setValue(toDoListDBAdapter.getAllToDos());
+            }else {
+                toDoItems.getValue().clear();
+                toDoItems.getValue().addAll(toDoListDBAdapter.getAllToDos());
+            }
         }
         return addSuccess;
     }

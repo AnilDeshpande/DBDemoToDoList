@@ -50,7 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        initrecyclerView();
 
         mainActivityViewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
             @Override
@@ -63,18 +65,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onChanged(String s) {
                 Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
-                toDoAdapter.notifyDataSetChanged();
             }
         });
 
-        initrecyclerView();
+
     }
 
     private void initrecyclerView(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerListViewToDos);
         recyclerView.setLayoutManager(linearLayoutManager);
-        toDoAdapter = new ToDoAdapter(this ,mainActivityViewModel.getToDoList().getValue(), this);
+        toDoAdapter = new ToDoAdapter(this ,new ArrayList<>(), this);
         recyclerView.setAdapter(toDoAdapter);
     }
 
@@ -115,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(MainActivity.this, "Fields are empty", Toast.LENGTH_SHORT).show();
         }else{
             mainActivityViewModel.addToDoList(newToDoString, newPlace);
-            toDoAdapter.notifyDataSetChanged();
             clearEditTexts();
         }
 
