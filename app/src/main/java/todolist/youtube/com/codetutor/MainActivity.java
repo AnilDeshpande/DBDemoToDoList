@@ -24,19 +24,13 @@ import todolist.youtube.com.codetutor.viewmodel.MainActivityViewModel;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ToDoAdapter.ListItemClickListener {
 
     private EditText editTextNewToDoString, editTextPlace;
-
     private Button buttonAddToDo;
 
     private RecyclerView recyclerView;
 
-    private ToDoListDBAdapter toDoListDBAdapter;
-
-
-
-    ToDoAdapter toDoAdapter;
+    private ToDoAdapter toDoAdapter;
 
     private MainActivityViewModel mainActivityViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextPlace=(EditText)findViewById(R.id.editTextPlace);
         buttonAddToDo=(Button)findViewById(R.id.buttonAddToDo);
         buttonAddToDo.setOnClickListener(this);
-
-
 
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
@@ -85,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainActivityViewModel.getToDoList().removeObservers(this);
+        mainActivityViewModel.getErrorStatus().removeObservers(this);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.buttonAddToDo:
@@ -106,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
 
 
     private void addNewToDo(){
@@ -132,4 +130,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextNewToDoString.setText("");
         editTextPlace.setText("");
     }
+
 }

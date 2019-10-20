@@ -1,6 +1,5 @@
 package todolist.youtube.com.codetutor.repository;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -14,6 +13,8 @@ import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 public class ToDosRepositoryImpl implements ToDosRepository {
 
     MutableLiveData<List<ToDo>> toDoItems;
+    MutableLiveData<ToDo> toDoMutableLiveData;
+
     ToDoListDBAdapter toDoListDBAdapter;
 
     private static  ToDosRepository instance = null;
@@ -60,6 +61,9 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         boolean deleteSuccess = toDoListDBAdapter.delete(id);
         if(!deleteSuccess){
             throw new ToDoNotFoundException("Id is wrong");
+        }else {
+            this.toDoMutableLiveData.setValue(null);
+            this.toDoItems.setValue(toDoListDBAdapter.getAllToDos());
         }
     }
 
@@ -68,10 +72,13 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         boolean modifySuccess = toDoListDBAdapter.modify(id,newToDoValuel);
         if(!modifySuccess){
             throw new ToDoNotFoundException("Id is wrong");
+        }else {
+            this.toDoMutableLiveData.setValue(toDoListDBAdapter.getToDo(id));
+            this.toDoItems.setValue(toDoListDBAdapter.getAllToDos());
         }
     }
 
-    public ToDo getToDo(long id) throws Exception{
+    public MutableLiveData<ToDo> getToDo(long id) throws Exception{
         ToDo toDo = null;
         for(ToDo toDo1: toDoItems.getValue()){
             if(toDo1.getId()==id){
@@ -82,6 +89,7 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         if(toDo==null){
             throw new ToDoNotFoundException("Id is wrong");
         }
-        return toDo;
+        toDoMutableLiveData = new MutableLiveData<>(toDo);
+        return this.toDoMutableLiveData;
     }
 }

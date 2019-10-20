@@ -3,6 +3,9 @@ package todolist.youtube.com.codetutor;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 
 import todolist.youtube.com.codetutor.bean.ToDo;
 import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
+import todolist.youtube.com.codetutor.viewmodel.DataManipulationActivityViewModel;
 
 public class DataManipulationActivity extends AppCompatActivity{
 
@@ -18,26 +22,13 @@ public class DataManipulationActivity extends AppCompatActivity{
     Button buttonRemoveToDo, buttonModifyToDo;
     EditText editTextNewToDo;
 
-    private ToDoListDBAdapter toDoListDBAdapter;
-
-    long toDoId;
-    ToDo toDo;
+    private DataManipulationActivityViewModel viewModel;
+    private long toDoId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_data_manipulate);
-
-        toDoId = getIntent().getLongExtra("todoId",1);
-
-
-        toDoListDBAdapter=ToDoListDBAdapter.getToDoListDBAdapterInstance(getApplicationContext());
-        try{
-            toDo = toDoListDBAdapter.getToDo(toDoId);
-        }catch (Exception e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-
 
         textViewToBeModifiedToDoId  = (TextView)findViewById(R.id.textViewToBeModifiedToDoId);
         textViewToBeModifiedToDo = (TextView)findViewById(R.id.textViewToBeModifiedToDo);
@@ -45,59 +36,43 @@ public class DataManipulationActivity extends AppCompatActivity{
 
         buttonRemoveToDo = (Button)findViewById(R.id.buttonRemoveToDo);
         buttonModifyToDo = (Button)findViewById(R.id.buttonModifyToDo);
-
         editTextNewToDo = (EditText)findViewById(R.id.editTextNewToDo);
 
-        showSelectedToDo(getToDo());
+        viewModel = ViewModelProviders.of(this).get(DataManipulationActivityViewModel.class);
+        toDoId = getIntent().getLongExtra("todoId",1);
+
+        viewModel.getToDo(toDoId).observe(this, new Observer<ToDo>() {
+            @Override
+            public void onChanged(ToDo toDo) {
+                if(toDo==null){
+                    updateViewOnRemove();
+                }else {
+                    showSelectedToDo(toDo);
+                }
+            }
+        });
+
+        viewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(DataManipulationActivity.this, s, Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         buttonRemoveToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeToDo();
+                viewModel.removeToDo(toDoId);
             }
         });
 
         buttonModifyToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modifyToDo();
+                viewModel.modifyToDo(toDoId,editTextNewToDo.getText().toString());
             }
         });
-    }
-
-    private ToDo getToDo(){
-        try{
-           return toDo = toDoListDBAdapter.getToDo(toDoId);
-        }catch (Exception e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        return null;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    private void removeToDo(){
-        try{
-            toDoListDBAdapter.delete((int)toDoId);
-            updateViewOnRemove();
-        }catch (Exception e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void modifyToDo(){
-        String newToDO=editTextNewToDo.getText().toString();
-        try{
-            toDoListDBAdapter.modify((int) toDo.getId(),newToDO);
-            toDo = toDoListDBAdapter.getToDo(toDo.getId());
-            showSelectedToDo(toDo);
-        }catch (Exception e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
     }
 
     public void showSelectedToDo(ToDo toDo) {
@@ -115,5 +90,13 @@ public class DataManipulationActivity extends AppCompatActivity{
         textViewToBeModifiedToDo.setText("");
         textViewToBeModifiedToDoPlace.setText("");
         Toast.makeText(this,"Successfully removed", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel.getErrorMessage().removeObservers(this);
+        viewModel.getToDo(toDoId).removeObservers(this);
+
     }
 }
