@@ -12,15 +12,18 @@ import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 
 public class ToDosRepositoryImpl implements ToDosRepository {
 
-    MutableLiveData<List<ToDo>> toDoItems;
+    MutableLiveData<List<ToDo>> mutableToDoItems;
     MutableLiveData<ToDo> toDoMutableLiveData;
 
-    ToDoListDBAdapter toDoListDBAdapter;
+    List<ToDo> toDoList;
+
+    private ToDoListDBAdapter toDoListDBAdapter;
 
     private static  ToDosRepository instance = null;
 
     public static ToDosRepository getInstance(){
         if(instance == null){
+
             instance = new ToDosRepositoryImpl();
         }
         return instance;
@@ -28,15 +31,15 @@ public class ToDosRepositoryImpl implements ToDosRepository {
 
     private ToDosRepositoryImpl(){
         this.toDoListDBAdapter = MyApplication.getToDoListDBAdapter();
-        this.toDoItems = new MutableLiveData<>();
-        this.toDoItems.setValue(new ArrayList<ToDo>());
+        this.mutableToDoItems = new MutableLiveData<>();
+        this.mutableToDoItems.setValue(new ArrayList<ToDo>());
     }
 
     @Override
     public MutableLiveData<List<ToDo>> getAllToDos() throws Exception{
-        toDoItems = new MutableLiveData<>();
-        toDoItems.setValue(toDoListDBAdapter.getAllToDos());
-        return toDoItems;
+        this.toDoList = toDoListDBAdapter.getAllToDos();
+        mutableToDoItems.setValue(this.toDoList);
+        return mutableToDoItems;
     }
 
     @Override
@@ -45,13 +48,15 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         if (!addSuccess){
             throw new Exception("Some thing went wrong!!!");
         }else{
-            if(toDoItems.getValue()==null){
-                toDoItems = new MutableLiveData<>();
-                toDoItems.setValue(toDoListDBAdapter.getAllToDos());
+            toDoList = toDoListDBAdapter.getAllToDos();
+            mutableToDoItems.setValue(toDoList);
+            /*if(mutableToDoItems.getValue()==null){
+                mutableToDoItems = new MutableLiveData<>();
+                mutableToDoItems.setValue(toDoListDBAdapter.getAllToDos());
             }else {
-                toDoItems.getValue().clear();
-                toDoItems.setValue(toDoListDBAdapter.getAllToDos());
-            }
+                mutableToDoItems.getValue().clear();
+                mutableToDoItems.setValue(toDoListDBAdapter.getAllToDos());
+            }*/
         }
     }
 
@@ -63,7 +68,8 @@ public class ToDosRepositoryImpl implements ToDosRepository {
             throw new ToDoNotFoundException("Id is wrong");
         }else {
             this.toDoMutableLiveData.setValue(null);
-            this.toDoItems.setValue(toDoListDBAdapter.getAllToDos());
+            this.toDoList = toDoListDBAdapter.getAllToDos();
+            this.mutableToDoItems.setValue(this.toDoList);
         }
     }
 
@@ -74,13 +80,13 @@ public class ToDosRepositoryImpl implements ToDosRepository {
             throw new ToDoNotFoundException("Id is wrong");
         }else {
             this.toDoMutableLiveData.setValue(toDoListDBAdapter.getToDo(id));
-            this.toDoItems.setValue(toDoListDBAdapter.getAllToDos());
+            this.mutableToDoItems.setValue(toDoListDBAdapter.getAllToDos());
         }
     }
 
     public MutableLiveData<ToDo> getToDo(long id) throws Exception{
         ToDo toDo = null;
-        for(ToDo toDo1: toDoItems.getValue()){
+        for(ToDo toDo1: mutableToDoItems.getValue()){
             if(toDo1.getId()==id){
                 toDo = toDo1;
                 break;

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        getLifecycle().addObserver(mainActivityViewModel);
         initrecyclerView();
 
         mainActivityViewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         mainActivityViewModel.getToDoList().removeObservers(this);
         mainActivityViewModel.getErrorStatus().removeObservers(this);
+        getLifecycle().removeObserver(mainActivityViewModel);
     }
 
     @Override
