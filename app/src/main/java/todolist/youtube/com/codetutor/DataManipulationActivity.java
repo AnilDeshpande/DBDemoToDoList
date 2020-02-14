@@ -13,8 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import todolist.youtube.com.codetutor.bean.ToDo;
-import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
-import todolist.youtube.com.codetutor.viewmodel.DataManipulationActivityViewModel;
+import todolist.youtube.com.codetutor.viewmodel.CommonViewModel;
 
 public class DataManipulationActivity extends AppCompatActivity{
 
@@ -22,7 +21,7 @@ public class DataManipulationActivity extends AppCompatActivity{
     Button buttonRemoveToDo, buttonModifyToDo;
     EditText editTextNewToDo;
 
-    private DataManipulationActivityViewModel viewModel;
+    private CommonViewModel viewModel;
     private long toDoId;
 
     @Override
@@ -38,7 +37,7 @@ public class DataManipulationActivity extends AppCompatActivity{
         buttonModifyToDo = (Button)findViewById(R.id.buttonModifyToDo);
         editTextNewToDo = (EditText)findViewById(R.id.editTextNewToDo);
 
-        viewModel = ViewModelProviders.of(this).get(DataManipulationActivityViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(CommonViewModel.class);
         toDoId = getIntent().getLongExtra("todoId",1);
 
         viewModel.getToDo(toDoId).observe(this, new Observer<ToDo>() {
@@ -52,7 +51,7 @@ public class DataManipulationActivity extends AppCompatActivity{
             }
         });
 
-        viewModel.getErrorMessage().observe(this, new Observer<String>() {
+        viewModel.getErrorStatus().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 Toast.makeText(DataManipulationActivity.this, s, Toast.LENGTH_LONG).show();
@@ -95,7 +94,7 @@ public class DataManipulationActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        viewModel.getErrorMessage().removeObservers(this);
+        viewModel.getErrorStatus().removeObservers(this);
         viewModel.getToDo(toDoId).removeObservers(this);
 
     }

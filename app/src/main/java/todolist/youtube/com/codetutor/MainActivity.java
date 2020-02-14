@@ -4,6 +4,7 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,10 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import todolist.youtube.com.codetutor.bean.ToDo;
-import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
-import todolist.youtube.com.codetutor.viewmodel.MainActivityViewModel;
+import todolist.youtube.com.codetutor.viewmodel.CommonViewModel;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ToDoAdapter.ListItemClickListener {
+
+    private static final String TAG = "MainActivity";
 
     private EditText editTextNewToDoString, editTextPlace;
     private Button buttonAddToDo;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ToDoAdapter toDoAdapter;
 
-    private MainActivityViewModel mainActivityViewModel;
+    private CommonViewModel mainActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +45,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAddToDo.setOnClickListener(this);
 
 
-        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        mainActivityViewModel = ViewModelProviders.of(this).get(CommonViewModel.class);
         getLifecycle().addObserver(mainActivityViewModel);
         initrecyclerView();
 
-        mainActivityViewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
+        mainActivityViewModel.getMutableToDoList().observe(this, new Observer<List<ToDo>>() {
             @Override
             public void onChanged(List<ToDo> toDos) {
                 setNewList(toDos);
             }
         });
+
+        Log.i(TAG,"mainActivityViewModel referece: "+mainActivityViewModel);
 
         mainActivityViewModel.getErrorStatus().observe(this, new Observer<String>() {
             @Override
@@ -60,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
             }
         });
+
+        Log.i(TAG,"mainActivityViewModel referece: "+mainActivityViewModel);
 
 
     }
@@ -80,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mainActivityViewModel.getToDoList().removeObservers(this);
+        mainActivityViewModel.getMutableToDoList().removeObservers(this);
         mainActivityViewModel.getErrorStatus().removeObservers(this);
         getLifecycle().removeObserver(mainActivityViewModel);
     }

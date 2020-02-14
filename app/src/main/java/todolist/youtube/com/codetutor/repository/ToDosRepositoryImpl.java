@@ -1,5 +1,7 @@
 package todolist.youtube.com.codetutor.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
 import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 
 public class ToDosRepositoryImpl implements ToDosRepository {
+
+    private static final String TAG = "ToDosRepositoryImpl";
 
     MutableLiveData<List<ToDo>> mutableToDoItems;
     MutableLiveData<ToDo> toDoMutableLiveData;
@@ -39,6 +43,7 @@ public class ToDosRepositoryImpl implements ToDosRepository {
     public MutableLiveData<List<ToDo>> getAllToDos() throws Exception{
         this.toDoList = toDoListDBAdapter.getAllToDos();
         mutableToDoItems.setValue(this.toDoList);
+        Log.i(TAG," mutableToDoItems reference: "+mutableToDoItems);
         return mutableToDoItems;
     }
 
@@ -50,13 +55,6 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         }else{
             toDoList = toDoListDBAdapter.getAllToDos();
             mutableToDoItems.setValue(toDoList);
-            /*if(mutableToDoItems.getValue()==null){
-                mutableToDoItems = new MutableLiveData<>();
-                mutableToDoItems.setValue(toDoListDBAdapter.getAllToDos());
-            }else {
-                mutableToDoItems.getValue().clear();
-                mutableToDoItems.setValue(toDoListDBAdapter.getAllToDos());
-            }*/
         }
     }
 
