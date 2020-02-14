@@ -16,10 +16,10 @@ public class ToDosRepositoryImpl implements ToDosRepository {
 
     private static final String TAG = "ToDosRepositoryImpl";
 
-    MutableLiveData<List<ToDo>> mutableToDoItems;
-    MutableLiveData<ToDo> toDoMutableLiveData;
+    private MutableLiveData<List<ToDo>> mutableToDoItems;
+    private MutableLiveData<ToDo> toDoMutableLiveData;
 
-    List<ToDo> toDoList;
+    private List<ToDo> toDoList;
 
     private ToDoListDBAdapter toDoListDBAdapter;
 
@@ -72,8 +72,8 @@ public class ToDosRepositoryImpl implements ToDosRepository {
     }
 
     @Override
-    public void modifyToDoItem(long id, String newToDoValuel) throws Exception{
-        boolean modifySuccess = toDoListDBAdapter.modify(id,newToDoValuel);
+    public void modifyToDoItem(long id, String newToDoValue) throws Exception{
+        boolean modifySuccess = toDoListDBAdapter.modify(id, newToDoValue);
         if(!modifySuccess){
             throw new ToDoNotFoundException("Id is wrong");
         }else {

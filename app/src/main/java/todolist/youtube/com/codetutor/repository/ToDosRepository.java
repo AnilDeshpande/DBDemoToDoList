@@ -8,9 +8,9 @@ import java.util.List;
 import todolist.youtube.com.codetutor.bean.ToDo;
 
 public interface ToDosRepository {
-    public MutableLiveData<List<ToDo>> getAllToDos() throws Exception;
-    public MutableLiveData<ToDo> getToDo(long id) throws Exception;
-    public void addToDoItem(String toDoItem, String place) throws Exception;
-    public void removeToDoItem(long id) throws Exception;
-    public void modifyToDoItem(long id, String newToDoValuel) throws Exception;
+    MutableLiveData<List<ToDo>> getAllToDos() throws Exception;
+    MutableLiveData<ToDo> getToDo(long id) throws Exception;
+    void addToDoItem(String toDoItem, String place) throws Exception;
+    void removeToDoItem(long id) throws Exception;
+    void modifyToDoItem(long id, String newToDoValue) throws Exception;
 }

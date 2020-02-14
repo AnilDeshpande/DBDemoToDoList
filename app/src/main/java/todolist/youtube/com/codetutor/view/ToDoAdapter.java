@@ -17,7 +17,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
 
     private Context context;
     private List<ToDo> todos;
-    ListItemClickListener listItemClickListener;
+    private ListItemClickListener listItemClickListener;
 
     public interface ListItemClickListener{
         void onItemClicked(long position);

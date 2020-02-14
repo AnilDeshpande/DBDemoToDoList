@@ -18,9 +18,9 @@ import todolist.youtube.com.codetutor.viewmodel.CommonViewModel;
 
 public class DataManipulationActivity extends AppCompatActivity{
 
-    TextView textViewToBeModifiedToDoId, textViewToBeModifiedToDo, textViewToBeModifiedToDoPlace;
-    Button buttonRemoveToDo, buttonModifyToDo;
-    EditText editTextNewToDo;
+    private TextView textViewToBeModifiedToDoId, textViewToBeModifiedToDo, textViewToBeModifiedToDoPlace;
+    private Button buttonRemoveToDo, buttonModifyToDo;
+    private EditText editTextNewToDo;
 
     private CommonViewModel viewModel;
     private long toDoId;
