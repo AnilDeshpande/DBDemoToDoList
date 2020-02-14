@@ -6,7 +6,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ViewModel;
 
@@ -28,17 +27,12 @@ public class CommonViewModel extends ViewModel implements LifecycleObserver {
     private MutableLiveData<List<ToDo>> mutableToDoList = new MutableLiveData<>();
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private MutableLiveData<ToDo> toDoMutableLiveData;
+
     List<ToDo> toDoList = new ArrayList<>();
 
     public CommonViewModel(){
         try{
             mutableToDoList = toDosRepository.getAllToDos();
-            mutableToDoList.observeForever(new Observer<List<ToDo>>() {
-                @Override
-                public void onChanged(List<ToDo> toDos) {
-                    Log.i(TAG,"The data got changed");
-                }
-            });
         }catch (Exception e){
             mutableToDoList.setValue(toDoList);
         }

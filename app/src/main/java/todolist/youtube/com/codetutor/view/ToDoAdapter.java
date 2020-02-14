@@ -1,4 +1,4 @@
-package todolist.youtube.com.codetutor;
+package todolist.youtube.com.codetutor.view;
 
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.bean.ToDo;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHolder> {

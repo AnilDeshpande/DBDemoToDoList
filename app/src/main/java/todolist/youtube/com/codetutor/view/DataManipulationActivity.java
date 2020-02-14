@@ -1,4 +1,4 @@
-package todolist.youtube.com.codetutor;
+package todolist.youtube.com.codetutor.view;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.bean.ToDo;
 import todolist.youtube.com.codetutor.viewmodel.CommonViewModel;
 
@@ -89,6 +90,7 @@ public class DataManipulationActivity extends AppCompatActivity{
         textViewToBeModifiedToDo.setText("");
         textViewToBeModifiedToDoPlace.setText("");
         Toast.makeText(this,"Successfully removed", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     @Override
