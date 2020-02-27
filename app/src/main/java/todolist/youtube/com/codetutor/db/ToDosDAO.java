@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -17,11 +18,11 @@ public interface ToDosDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(ToDo toDo);
 
-    @Query("DELETE from table_todos where id = :toDo")
-    void delete(ToDo toDo);
+    @Delete
+    void delete(ToDo... toDos);
 
-    @Query("")
-    void updateToDo(ToDo oldToDo, ToDo newToDo);
+    @Update
+    void updateToDo(ToDo... oldToDo);
 
     @Query("SELECT * from table_todos")
     LiveData<List<ToDo>> getAllToDos();

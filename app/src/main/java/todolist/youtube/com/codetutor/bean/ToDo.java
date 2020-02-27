@@ -14,7 +14,7 @@ public class ToDo {
      * Created by anildeshpande on 4/3/17.
      */
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     private long id;
 
