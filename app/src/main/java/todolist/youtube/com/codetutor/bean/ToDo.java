@@ -1,16 +1,25 @@
 package todolist.youtube.com.codetutor.bean;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * Created by anildeshpande on 4/3/17.
  */
-
+@Entity(tableName = "table_todos")
 public class ToDo {
     /**
      * Created by anildeshpande on 4/3/17.
      */
 
+    @PrimaryKey
+    @NonNull
     private long id;
+
     private String toDo;
+
     private String place;
 
     public ToDo(){
