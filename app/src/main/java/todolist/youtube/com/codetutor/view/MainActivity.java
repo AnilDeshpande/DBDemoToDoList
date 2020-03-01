@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getLifecycle().addObserver(mainActivityViewModel);
         initrecyclerView();
 
-        mainActivityViewModel.getMutableToDoList().observe(this, new Observer<List<ToDo>>() {
+        mainActivityViewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
             @Override
             public void onChanged(List<ToDo> toDos) {
                 setNewList(toDos);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mainActivityViewModel.getMutableToDoList().removeObservers(this);
+        mainActivityViewModel.getToDoList().removeObservers(this);
         mainActivityViewModel.getErrorStatus().removeObservers(this);
         getLifecycle().removeObserver(mainActivityViewModel);
     }

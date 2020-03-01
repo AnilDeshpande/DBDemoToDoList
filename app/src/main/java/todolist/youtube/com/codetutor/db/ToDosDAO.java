@@ -22,8 +22,11 @@ public interface ToDosDAO {
     void delete(ToDo... toDos);
 
     @Update
-    void updateToDo(ToDo... oldToDo);
+    void updateToDo(ToDo... newToDo);
 
     @Query("SELECT * from table_todos")
     LiveData<List<ToDo>> getAllToDos();
+
+    @Query("SELECT * from table_todos WHERE id = :id")
+    LiveData<ToDo> getToDo(long id);
 }
