@@ -59,6 +59,7 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         ToDo tempToDo = new ToDo(0,toDoItem, place);
         dataBase.dataBaseExecutorService.execute(()->{
             toDosDAO.insert(tempToDo);
+            this.mutableToDoItems = toDosDAO.getAllToDos();
         });
 
     }
@@ -67,6 +68,7 @@ public class ToDosRepositoryImpl implements ToDosRepository {
     public void removeToDoItem(long id) throws Exception{
         dataBase.dataBaseExecutorService.execute(()->{
             toDosDAO.delete(getToDo(id));
+            this.mutableToDoItems = toDosDAO.getAllToDos();
         });
 
     }
@@ -78,6 +80,7 @@ public class ToDosRepositoryImpl implements ToDosRepository {
 
         dataBase.dataBaseExecutorService.execute(()->{
             toDosDAO.updateToDo(temp);
+            this.mutableToDoItems = toDosDAO.getAllToDos();
         });
 
     }
