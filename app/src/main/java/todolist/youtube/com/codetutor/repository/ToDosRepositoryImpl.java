@@ -60,7 +60,6 @@ public class ToDosRepositoryImpl implements ToDosRepository {
 
     @Override
     public void removeToDoItem(long id) throws Exception{
-
         boolean deleteSuccess = toDoListDBAdapter.delete(id);
         if(!deleteSuccess){
             throw new ToDoNotFoundException("Id is wrong");
