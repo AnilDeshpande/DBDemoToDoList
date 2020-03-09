@@ -1,20 +1,13 @@
 package todolist.youtube.com.codetutor.repository;
 
-import android.content.Context;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import todolist.youtube.com.codetutor.MyApplication;
 import todolist.youtube.com.codetutor.bean.ToDo;
-import todolist.youtube.com.codetutor.db.ToDoListDBAdapter;
 import todolist.youtube.com.codetutor.db.ToDosDAO;
 import todolist.youtube.com.codetutor.db.ToDosRoomDataBase;
-import todolist.youtube.com.codetutor.exception.ToDoNotFoundException;
 
 public class ToDosRepositoryImpl implements ToDosRepository {
 
