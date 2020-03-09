@@ -22,15 +22,6 @@ public class ToDo {
 
     private String place;
 
-    public ToDo(){
-        super();
-    }
-
-    public ToDo(long id, String toDo){
-        this.id=id;
-        this.toDo=toDo;
-    }
-
     public ToDo(long id, String toDo, String place){
         this.id=id;
         this.toDo=toDo;

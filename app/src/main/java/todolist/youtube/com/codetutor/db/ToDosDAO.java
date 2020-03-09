@@ -19,14 +19,14 @@ public interface ToDosDAO {
     void insert(ToDo toDo);
 
     @Delete
-    void delete(ToDo... toDos);
+    int delete(ToDo... toDos);
 
     @Update
-    void updateToDo(ToDo... newToDo);
+    int updateToDo(ToDo... newToDo);
 
     @Query("SELECT * from table_todos")
-    LiveData<List<ToDo>> getAllToDos();
+    List<ToDo> getAllToDos();
 
     @Query("SELECT * from table_todos WHERE id = :id")
-    LiveData<ToDo> getToDo(long id);
+    ToDo getToDo(long id);
 }

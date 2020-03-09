@@ -36,16 +36,6 @@ public class CommonViewModel extends ViewModel implements LifecycleObserver {
         }
     }
 
-//    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-//    protected void refreshData(){
-//        try{
-//            liveToDoList.setValue(toDosRepository.getAllToDos().getValue());
-//        }catch (Exception e){
-//            errorMessage.setValue(e.getMessage());
-//            liveToDoList.setValue(toDoList);
-//        }
-//    }
-
     public LiveData<List<ToDo>> getToDoList(){
         return liveToDoList;
     }
@@ -53,7 +43,6 @@ public class CommonViewModel extends ViewModel implements LifecycleObserver {
     public void addToDoList(String todoItem, String place){
         try{
             toDosRepository.addToDoItem(todoItem, place);
-
         }catch (Exception e){
             errorMessage.setValue(e.getMessage());
         }

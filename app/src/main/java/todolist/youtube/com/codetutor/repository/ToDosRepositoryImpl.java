@@ -20,13 +20,13 @@ public class ToDosRepositoryImpl implements ToDosRepository {
 
     private static final String TAG = "ToDosRepositoryImpl";
 
-    private LiveData<List<ToDo>> mutableToDoItems;
-    private LiveData<ToDo> toDoMutableLiveData;
+    private MutableLiveData<List<ToDo>> mutableToDoItems;
+    private MutableLiveData<ToDo> toDoMutableLiveData;
     private ToDosRoomDataBase dataBase;
 
+    private MutableLiveData<String> message;
 
     ToDosDAO toDosDAO;
-
 
     private static  ToDosRepository instance = null;
 
@@ -40,10 +40,13 @@ public class ToDosRepositoryImpl implements ToDosRepository {
     private ToDosRepositoryImpl(){
         dataBase = ToDosRoomDataBase.getDatabaseInstance();
         toDosDAO = dataBase.toDosDAO();
+        this.toDoMutableLiveData = new MutableLiveData<>();
+        this.mutableToDoItems = new MutableLiveData<>();
+        this.message = new MutableLiveData<>();
+
         dataBase.dataBaseExecutorService.execute(()->{
-            this.mutableToDoItems = toDosDAO.getAllToDos();
+            this.mutableToDoItems.postValue(toDosDAO.getAllToDos());
         });
-        this.toDoMutableLiveData = null;
     }
 
     @Override
@@ -59,40 +62,40 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         ToDo tempToDo = new ToDo(0,toDoItem, place);
         dataBase.dataBaseExecutorService.execute(()->{
             toDosDAO.insert(tempToDo);
-            this.mutableToDoItems = toDosDAO.getAllToDos();
+            this.mutableToDoItems.postValue(toDosDAO.getAllToDos());
         });
-
     }
 
     @Override
     public void removeToDoItem(long id) throws Exception{
-        dataBase.dataBaseExecutorService.execute(()->{
-            toDosDAO.delete(getToDo(id));
-            this.mutableToDoItems = toDosDAO.getAllToDos();
+        dataBase.dataBaseExecutorService.execute(() ->{
+            if(toDosDAO.delete(toDosDAO.getToDo(id))>0){
+                this.toDoMutableLiveData.postValue(null);
+                this.mutableToDoItems.postValue(toDosDAO.getAllToDos());
+            }
         });
-
     }
 
     @Override
     public void modifyToDoItem(long id, String newToDoValue) throws Exception{
-        ToDo temp = getToDo(id);
-        temp.setToDo(newToDoValue);
-
         dataBase.dataBaseExecutorService.execute(()->{
-            toDosDAO.updateToDo(temp);
-            this.mutableToDoItems = toDosDAO.getAllToDos();
+            ToDo temp = toDosDAO.getToDo(id);
+            temp.setToDo(newToDoValue);
+            if(toDosDAO.updateToDo(temp)>0){
+                this.toDoMutableLiveData.postValue(toDosDAO.getToDo(id));
+                this.mutableToDoItems.postValue(toDosDAO.getAllToDos());
+            }
         });
-
     }
 
     public LiveData<ToDo> getToDoLiveData(long id) throws Exception{
         dataBase.dataBaseExecutorService.execute(()->{
-            toDoMutableLiveData = toDosDAO.getToDo(id);
+            toDoMutableLiveData.postValue(toDosDAO.getToDo(id));
         });
         return toDoMutableLiveData;
     }
 
-    private ToDo getToDo(long id){
-        return toDosDAO.getToDo(id).getValue();
+    public LiveData<String> getMessage(){
+        return message;
     }
 }
