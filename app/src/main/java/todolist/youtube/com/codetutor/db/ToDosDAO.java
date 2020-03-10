@@ -25,7 +25,7 @@ public interface ToDosDAO {
     int updateToDo(ToDo... newToDo);
 
     @Query("SELECT * from table_todos")
-    List<ToDo> getAllToDos();
+    LiveData<List<ToDo>> getAllToDos();
 
     @Query("SELECT * from table_todos WHERE id = :id")
     ToDo getToDo(long id);

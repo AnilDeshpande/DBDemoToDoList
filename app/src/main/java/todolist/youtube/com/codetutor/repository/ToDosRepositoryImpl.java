@@ -1,5 +1,7 @@
 package todolist.youtube.com.codetutor.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -13,7 +15,7 @@ public class ToDosRepositoryImpl implements ToDosRepository {
 
     private static final String TAG = "ToDosRepositoryImpl";
 
-    private MutableLiveData<List<ToDo>> mutableToDoItems;
+    private LiveData<List<ToDo>> mutableToDoItems;
     private MutableLiveData<ToDo> toDoMutableLiveData;
     private ToDosRoomDataBase dataBase;
 
@@ -33,13 +35,10 @@ public class ToDosRepositoryImpl implements ToDosRepository {
     private ToDosRepositoryImpl(){
         dataBase = ToDosRoomDataBase.getDatabaseInstance();
         toDosDAO = dataBase.toDosDAO();
-        this.toDoMutableLiveData = new MutableLiveData<>();
-        this.mutableToDoItems = new MutableLiveData<>();
-        this.message = new MutableLiveData<>();
 
-        dataBase.dataBaseExecutorService.execute(()->{
-            this.mutableToDoItems.postValue(toDosDAO.getAllToDos());
-        });
+        this.toDoMutableLiveData = new MutableLiveData<>();
+        this.message = new MutableLiveData<>();
+        this.mutableToDoItems = toDosDAO.getAllToDos();
     }
 
     @Override
@@ -55,7 +54,6 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         ToDo tempToDo = new ToDo(0,toDoItem, place);
         dataBase.dataBaseExecutorService.execute(()->{
             toDosDAO.insert(tempToDo);
-            this.mutableToDoItems.postValue(toDosDAO.getAllToDos());
         });
     }
 
@@ -64,7 +62,6 @@ public class ToDosRepositoryImpl implements ToDosRepository {
         dataBase.dataBaseExecutorService.execute(() ->{
             if(toDosDAO.delete(toDosDAO.getToDo(id))>0){
                 this.toDoMutableLiveData.postValue(null);
-                this.mutableToDoItems.postValue(toDosDAO.getAllToDos());
             }
         });
     }
@@ -76,7 +73,6 @@ public class ToDosRepositoryImpl implements ToDosRepository {
             temp.setToDo(newToDoValue);
             if(toDosDAO.updateToDo(temp)>0){
                 this.toDoMutableLiveData.postValue(toDosDAO.getToDo(id));
-                this.mutableToDoItems.postValue(toDosDAO.getAllToDos());
             }
         });
     }
@@ -86,9 +82,5 @@ public class ToDosRepositoryImpl implements ToDosRepository {
             toDoMutableLiveData.postValue(toDosDAO.getToDo(id));
         });
         return toDoMutableLiveData;
-    }
-
-    public LiveData<String> getMessage(){
-        return message;
     }
 }
