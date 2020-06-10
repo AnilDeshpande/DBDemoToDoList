@@ -20,9 +20,7 @@ public class CommonViewModel extends ViewModel implements LifecycleObserver {
 
     private static final String TAG = CommonViewModel.class.getSimpleName();
 
-
     private ToDosRepository toDosRepository = ToDosRepositoryImpl.getInstance();
-
 
     private MutableLiveData<List<ToDo>> mutableToDoList = new MutableLiveData<>();
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
