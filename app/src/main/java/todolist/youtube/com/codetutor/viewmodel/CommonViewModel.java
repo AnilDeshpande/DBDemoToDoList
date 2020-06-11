@@ -16,80 +16,15 @@ import todolist.youtube.com.codetutor.bean.ToDo;
 import todolist.youtube.com.codetutor.repository.ToDosRepository;
 import todolist.youtube.com.codetutor.repository.ToDosRepositoryImpl;
 
-public class CommonViewModel extends ViewModel implements LifecycleObserver {
+public interface CommonViewModel extends LifecycleObserver {
 
-    private static final String TAG = CommonViewModel.class.getSimpleName();
-
-    private ToDosRepository toDosRepository = ToDosRepositoryImpl.getInstance();
-
-    private MutableLiveData<List<ToDo>> mutableToDoList = new MutableLiveData<>();
-    private MutableLiveData<String> errorMessage = new MutableLiveData<>();
-    private MutableLiveData<ToDo> toDoMutableLiveData;
-
-    List<ToDo> toDoList = new ArrayList<>();
-
-    public CommonViewModel(){
-        try{
-            mutableToDoList = toDosRepository.getAllToDos();
-        }catch (Exception e){
-            mutableToDoList.setValue(toDoList);
-        }
-    }
-
-    public LiveData<List<ToDo>> getMutableToDoList(){
-        return mutableToDoList;
-    }
-
-    public LiveData<String> getErrorStatus(){
-        return errorMessage;
-    }
-
-    public void addToDoList(String todoItem, String place){
-        try{
-            toDosRepository.addToDoItem(todoItem, place);
-            mutableToDoList.setValue(toDosRepository.getAllToDos().getValue());
-        }catch (Exception e){
-            errorMessage.setValue(e.getMessage());
-        }
-    }
-
-
-
-    public LiveData<ToDo> getToDo(long id){
-        try{
-            this.toDoMutableLiveData = toDosRepository.getToDo(id);
-        }catch (Exception e){
-            this.errorMessage = new MutableLiveData<>(e.getMessage());
-
-        }
-        return this.toDoMutableLiveData;
-    }
-
-    public void removeToDo(long id){
-        try{
-            toDosRepository.removeToDoItem(id);
-            toDoMutableLiveData.setValue(null);
-        }catch (Exception e){
-            this.errorMessage.setValue(e.getMessage());
-        }
-    }
-
-    public void modifyToDo(long id, String newToDo){
-        try{
-            toDosRepository.modifyToDoItem(id,newToDo);
-            toDoMutableLiveData = toDosRepository.getToDo(id);
-        }catch (Exception e){
-            this.errorMessage.setValue(e.getMessage());
-        }
-    }
+    public LiveData<List<ToDo>> getMutableToDoList();
+    public LiveData<String> getErrorStatus();
+    public LiveData<ToDo> getToDo(long id);
+    public void addToDoList(String todoItem, String place);
+    public void removeToDo(long id);
+    public void modifyToDo(long id, String newToDo);
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    protected void refreshData(){
-        try{
-            mutableToDoList.setValue(toDosRepository.getAllToDos().getValue());
-        }catch (Exception e){
-            errorMessage.setValue(e.getMessage());
-            mutableToDoList.setValue(toDoList);
-        }
-    }
+    void refreshData();
 }

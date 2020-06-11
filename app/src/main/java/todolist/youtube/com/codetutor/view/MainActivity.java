@@ -20,6 +20,7 @@ import java.util.List;
 import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.bean.ToDo;
 import todolist.youtube.com.codetutor.viewmodel.CommonViewModel;
+import todolist.youtube.com.codetutor.viewmodel.CommonViewModelImplementor;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ToDoAdapter.ListItemClickListener {
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAddToDo.setOnClickListener(this);
 
 
-        mainActivityViewModel = ViewModelProviders.of(this).get(CommonViewModel.class);
+        mainActivityViewModel = ViewModelProviders.of(this).get(CommonViewModelImplementor.class);
         getLifecycle().addObserver(mainActivityViewModel);
         initrecyclerView();
 
