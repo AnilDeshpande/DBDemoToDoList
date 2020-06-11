@@ -36,18 +36,12 @@ public class CommonViewModel extends ViewModel implements LifecycleObserver {
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    protected void refreshData(){
-        try{
-            mutableToDoList.setValue(toDosRepository.getAllToDos().getValue());
-        }catch (Exception e){
-            errorMessage.setValue(e.getMessage());
-            mutableToDoList.setValue(toDoList);
-        }
-    }
-
     public LiveData<List<ToDo>> getMutableToDoList(){
         return mutableToDoList;
+    }
+
+    public LiveData<String> getErrorStatus(){
+        return errorMessage;
     }
 
     public void addToDoList(String todoItem, String place){
@@ -59,9 +53,7 @@ public class CommonViewModel extends ViewModel implements LifecycleObserver {
         }
     }
 
-    public LiveData<String> getErrorStatus(){
-        return errorMessage;
-    }
+
 
     public LiveData<ToDo> getToDo(long id){
         try{
@@ -88,6 +80,16 @@ public class CommonViewModel extends ViewModel implements LifecycleObserver {
             toDoMutableLiveData = toDosRepository.getToDo(id);
         }catch (Exception e){
             this.errorMessage.setValue(e.getMessage());
+        }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    protected void refreshData(){
+        try{
+            mutableToDoList.setValue(toDosRepository.getAllToDos().getValue());
+        }catch (Exception e){
+            errorMessage.setValue(e.getMessage());
+            mutableToDoList.setValue(toDoList);
         }
     }
 }
