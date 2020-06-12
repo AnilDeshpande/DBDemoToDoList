@@ -21,6 +21,7 @@ public interface CommonViewModel extends LifecycleObserver {
     public LiveData<List<ToDo>> getMutableToDoList();
     public LiveData<String> getErrorStatus();
     public LiveData<ToDo> getToDo(long id);
+
     public void addToDoList(String todoItem, String place);
     public void removeToDo(long id);
     public void modifyToDo(long id, String newToDo);

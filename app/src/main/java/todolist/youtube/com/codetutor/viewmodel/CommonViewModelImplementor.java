@@ -21,15 +21,13 @@ public class CommonViewModelImplementor extends ViewModel implements CommonViewM
 
     private MutableLiveData<List<ToDo>> mutableToDoList = new MutableLiveData<>();
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
-    private MutableLiveData<ToDo> toDoMutableLiveData;
-
-    List<ToDo> toDoList = new ArrayList<>();
+    private MutableLiveData<ToDo> toDoMutableLiveData = new MutableLiveData<>();
 
     public CommonViewModelImplementor(){
         try{
             mutableToDoList = toDosRepository.getAllToDos();
         }catch (Exception e){
-            mutableToDoList.setValue(toDoList);
+            mutableToDoList.setValue(new ArrayList<>());
         }
     }
 
@@ -86,7 +84,7 @@ public class CommonViewModelImplementor extends ViewModel implements CommonViewM
             mutableToDoList.setValue(toDosRepository.getAllToDos().getValue());
         }catch (Exception e){
             errorMessage.setValue(e.getMessage());
-            mutableToDoList.setValue(toDoList);
+            mutableToDoList.setValue(new ArrayList<>());
         }
     }
 }
