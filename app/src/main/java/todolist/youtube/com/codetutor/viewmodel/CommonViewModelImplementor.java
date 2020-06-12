@@ -17,13 +17,18 @@ public class CommonViewModelImplementor extends ViewModel implements CommonViewM
 
     private static final String TAG = CommonViewModel.class.getSimpleName();
 
-    private ToDosRepository toDosRepository = ToDosRepositoryImpl.getInstance();
+    private ToDosRepository toDosRepository;
 
-    private MutableLiveData<List<ToDo>> mutableToDoList = new MutableLiveData<>();
-    private MutableLiveData<String> errorMessage = new MutableLiveData<>();
-    private MutableLiveData<ToDo> toDoMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<ToDo>> mutableToDoList;
+    private MutableLiveData<String> errorMessage;
+    private MutableLiveData<ToDo> toDoMutableLiveData;
 
     public CommonViewModelImplementor(){
+        toDosRepository = ToDosRepositoryImpl.getInstance();
+        mutableToDoList = new MutableLiveData<>();
+        errorMessage = new MutableLiveData<>();
+        toDoMutableLiveData = new MutableLiveData<>();
+
         try{
             mutableToDoList = toDosRepository.getAllToDos();
         }catch (Exception e){
