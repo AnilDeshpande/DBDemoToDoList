@@ -31,7 +31,7 @@ public class CommonViewModelImplementor extends ViewModel implements CommonViewM
         }
     }
 
-    public LiveData<List<ToDo>> getMutableToDoList(){
+    public LiveData<List<ToDo>> getToDoList(){
         return mutableToDoList;
     }
 
@@ -39,7 +39,7 @@ public class CommonViewModelImplementor extends ViewModel implements CommonViewM
         return errorMessage;
     }
 
-    public void addToDoList(String todoItem, String place){
+    public void addToDo(String todoItem, String place){
         try{
             toDosRepository.addToDoItem(todoItem, place);
             mutableToDoList.setValue(toDosRepository.getAllToDos().getValue());

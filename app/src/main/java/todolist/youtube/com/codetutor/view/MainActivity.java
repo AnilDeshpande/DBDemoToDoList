@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getLifecycle().addObserver(mainActivityViewModel);
         initrecyclerView();
 
-        mainActivityViewModel.getMutableToDoList().observe(this, new Observer<List<ToDo>>() {
+        mainActivityViewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
             @Override
             public void onChanged(List<ToDo> toDos) {
                 setNewList(toDos);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mainActivityViewModel.getMutableToDoList().removeObservers(this);
+        mainActivityViewModel.getToDoList().removeObservers(this);
         mainActivityViewModel.getErrorStatus().removeObservers(this);
         getLifecycle().removeObserver(mainActivityViewModel);
     }
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(TextUtils.isEmpty(newToDoString) && TextUtils.isEmpty(newPlace)){
             Toast.makeText(MainActivity.this, "Fields are empty", Toast.LENGTH_SHORT).show();
         }else{
-            mainActivityViewModel.addToDoList(newToDoString, newPlace);
+            mainActivityViewModel.addToDo(newToDoString, newPlace);
             clearEditTexts();
         }
 
