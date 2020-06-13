@@ -31,7 +31,6 @@ public abstract class ToDosRoomDataBase extends RoomDatabase {
                 }
             }
         }
-
         return instance;
     }
 

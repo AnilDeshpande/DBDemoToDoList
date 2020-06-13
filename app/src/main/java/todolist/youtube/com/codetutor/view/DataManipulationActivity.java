@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import todolist.youtube.com.codetutor.R;
 import todolist.youtube.com.codetutor.bean.ToDo;
-import todolist.youtube.com.codetutor.viewmodel.CommonViewModel;
+import todolist.youtube.com.codetutor.viewmodel.CommonViewModelImplementor;
 
 public class DataManipulationActivity extends AppCompatActivity{
 
@@ -22,7 +22,7 @@ public class DataManipulationActivity extends AppCompatActivity{
     private Button buttonRemoveToDo, buttonModifyToDo;
     private EditText editTextNewToDo;
 
-    private CommonViewModel viewModel;
+    private CommonViewModelImplementor viewModel;
     private long toDoId;
 
     @Override
@@ -38,7 +38,7 @@ public class DataManipulationActivity extends AppCompatActivity{
         buttonModifyToDo = (Button)findViewById(R.id.buttonModifyToDo);
         editTextNewToDo = (EditText)findViewById(R.id.editTextNewToDo);
 
-        viewModel = ViewModelProviders.of(this).get(CommonViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(CommonViewModelImplementor.class);
         toDoId = getIntent().getLongExtra("todoId",1);
 
         viewModel.getToDo(toDoId).observe(this, new Observer<ToDo>() {
