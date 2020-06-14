@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ToDoAdapter toDoAdapter;
 
-    private CommonViewModel mainActivityViewModel;
+    private CommonViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +46,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAddToDo.setOnClickListener(this);
 
 
-        mainActivityViewModel = ViewModelProviders.of(this).get(CommonViewModelImplementor.class);
-        getLifecycle().addObserver(mainActivityViewModel);
+        viewModel = ViewModelProviders.of(this).get(CommonViewModelImplementor.class);
+        getLifecycle().addObserver(viewModel);
         initrecyclerView();
 
-        mainActivityViewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
+        viewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
             @Override
             public void onChanged(List<ToDo> toDos) {
                 setNewList(toDos);
             }
         });
 
-
-
-        mainActivityViewModel.getErrorStatus().observe(this, new Observer<String>() {
+        viewModel.getErrorStatus().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
@@ -83,9 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mainActivityViewModel.getToDoList().removeObservers(this);
-        mainActivityViewModel.getErrorStatus().removeObservers(this);
-        getLifecycle().removeObserver(mainActivityViewModel);
+        viewModel.getToDoList().removeObservers(this);
+        viewModel.getErrorStatus().removeObservers(this);
+        getLifecycle().removeObserver(viewModel);
     }
 
     @Override
@@ -111,14 +109,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
     private void addNewToDo(){
         String newToDoString = editTextNewToDoString.getText().toString();
         String newPlace = editTextPlace.getText().toString();
         if(TextUtils.isEmpty(newToDoString) && TextUtils.isEmpty(newPlace)){
             Toast.makeText(MainActivity.this, "Fields are empty", Toast.LENGTH_SHORT).show();
         }else{
-            mainActivityViewModel.addToDo(newToDoString, newPlace);
+            viewModel.addToDo(newToDoString, newPlace);
             clearEditTexts();
         }
 
