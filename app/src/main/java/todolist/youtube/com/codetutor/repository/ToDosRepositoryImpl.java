@@ -27,7 +27,6 @@ public class ToDosRepositoryImpl implements ToDosRepository {
 
     public static ToDosRepository getInstance(){
         if(instance == null){
-
             instance = new ToDosRepositoryImpl();
         }
         return instance;

@@ -23,8 +23,9 @@ public class DataManipulationActivity extends AppCompatActivity{
     private Button buttonRemoveToDo, buttonModifyToDo;
     private EditText editTextNewToDo;
 
-    private CommonViewModel viewModel;
     private long toDoId;
+
+    private CommonViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,15 +40,15 @@ public class DataManipulationActivity extends AppCompatActivity{
         buttonModifyToDo = (Button)findViewById(R.id.buttonModifyToDo);
         editTextNewToDo = (EditText)findViewById(R.id.editTextNewToDo);
 
-        viewModel = ViewModelProviders.of(this).get(CommonViewModelImplementor.class);
         toDoId = getIntent().getLongExtra("todoId",1);
+        viewModel = ViewModelProviders.of(this).get(CommonViewModelImplementor.class);
 
         viewModel.getToDo(toDoId).observe(this, new Observer<ToDo>() {
             @Override
             public void onChanged(ToDo toDo) {
                 if(toDo==null){
                     updateViewOnRemove();
-                }else {
+                }else{
                     showSelectedToDo(toDo);
                 }
             }
@@ -56,7 +57,7 @@ public class DataManipulationActivity extends AppCompatActivity{
         viewModel.getErrorStatus().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Toast.makeText(DataManipulationActivity.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(DataManipulationActivity.this,s, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -71,7 +72,7 @@ public class DataManipulationActivity extends AppCompatActivity{
         buttonModifyToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.modifyToDo(toDoId,editTextNewToDo.getText().toString());
+                viewModel.modifyToDo(toDoId, editTextNewToDo.getText().toString());
             }
         });
     }
@@ -97,8 +98,7 @@ public class DataManipulationActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        viewModel.getToDoList().removeObservers(this);
         viewModel.getErrorStatus().removeObservers(this);
-        viewModel.getToDo(toDoId).removeObservers(this);
-
     }
 }

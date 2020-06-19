@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAddToDo=(Button)findViewById(R.id.buttonAddToDo);
         buttonAddToDo.setOnClickListener(this);
 
-
         viewModel = ViewModelProviders.of(this).get(CommonViewModelImplementor.class);
         getLifecycle().addObserver(viewModel);
         initrecyclerView();
@@ -60,9 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewModel.getErrorStatus().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,s, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     private void initrecyclerView(){
