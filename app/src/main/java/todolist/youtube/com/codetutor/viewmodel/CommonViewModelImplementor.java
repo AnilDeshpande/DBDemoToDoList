@@ -1,6 +1,9 @@
 package todolist.youtube.com.codetutor.viewmodel;
 
+import android.app.Service;
+import android.speech.tts.TextToSpeechService;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,6 +11,8 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import todolist.youtube.com.codetutor.MyApplication;
+import todolist.youtube.com.codetutor.Speaker;
 import todolist.youtube.com.codetutor.bean.ToDo;
 import todolist.youtube.com.codetutor.repository.ToDosRepository;
 import todolist.youtube.com.codetutor.repository.ToDosRepositoryImpl;
@@ -21,6 +26,12 @@ public class CommonViewModelImplementor extends ViewModel implements CommonViewM
     private LiveData<List<ToDo>> liveToDoList;
     private MutableLiveData<String> errorMessage ;
     private LiveData<ToDo> toDoMutableLiveData;
+
+    private Speaker speaker;
+
+    public void setSpeaker(Speaker speaker){
+        this.speaker = speaker;
+    }
 
     public CommonViewModelImplementor(){
         toDosRepository = ToDosRepositoryImpl.getInstance();
@@ -72,6 +83,16 @@ public class CommonViewModelImplementor extends ViewModel implements CommonViewM
             toDosRepository.modifyToDoItem(id,newToDo);
         }catch (Exception e){
             this.errorMessage.setValue(e.getMessage());
+        }
+    }
+
+    @Override
+    public void speakAllToDos() {
+        // ToDo - Speak all ToDos in one single go
+        if(speaker!=null){
+            for(ToDo toDo: liveToDoList.getValue()){
+                speaker.speak(toDo);
+            }
         }
     }
 }

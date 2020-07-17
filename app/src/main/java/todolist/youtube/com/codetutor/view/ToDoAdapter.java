@@ -21,6 +21,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
 
     public interface ListItemClickListener{
         void onItemClicked(long position);
+        void onItemLongLickListener(ToDo toDo);
     }
 
     public ToDoAdapter(Context context, List<ToDo> toDos, ListItemClickListener listItemClickListener){
@@ -43,12 +44,24 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
         holder.textViewId.setText("Id: "+toDo.getId());
         holder.textViewToDo.setText("To Do: "+toDo.getToDo());
         holder.textViewPlace.setText("Place: "+toDo.getPlace());
+        holder.textViewCompleted.setText("Is this Completed? : "+ (toDo.isCompleted()?"Yes": "No"));
+
         holder.layoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(listItemClickListener!=null){
                     listItemClickListener.onItemClicked(toDo.getId());
                 }
+            }
+        });
+
+        holder.layoutContainer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(listItemClickListener!=null){
+                    listItemClickListener.onItemLongLickListener(toDo);
+                }
+                return true;
             }
         });
     }
@@ -66,7 +79,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
     class ToDoViewViewHolder extends RecyclerView.ViewHolder{
 
         public LinearLayout layoutContainer;
-        public TextView textViewId, textViewToDo, textViewPlace;
+        public TextView textViewId, textViewToDo, textViewPlace,textViewCompleted;
 
         public ToDoViewViewHolder(View view){
             super(view);
@@ -74,6 +87,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoViewViewHo
             textViewId = (TextView)view.findViewById(R.id.textViewId);
             textViewToDo = (TextView)view.findViewById(R.id.textViewToDo);
             textViewPlace = (TextView)view.findViewById(R.id.textViewPlace);
+            textViewCompleted = (TextView)view.findViewById(R.id.textViewCompleted);
         }
 
 

@@ -20,4 +20,5 @@ public interface CommonViewModel {
     void addToDo(String todoItem, String place);
     void removeToDo(long id);
     void modifyToDo(long id, String newToDo);
+    void speakAllToDos();
 }

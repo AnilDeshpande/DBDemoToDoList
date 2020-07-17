@@ -22,6 +22,8 @@ public class ToDo {
 
     private String place;
 
+    private boolean isCompleted;
+
     public ToDo(long id, String toDo, String place){
         this.id=id;
         this.toDo=toDo;
@@ -51,5 +53,13 @@ public class ToDo {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }

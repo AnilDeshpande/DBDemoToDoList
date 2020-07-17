@@ -3,7 +3,11 @@ package todolist.youtube.com.codetutor.view;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,12 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import todolist.youtube.com.codetutor.R;
+import todolist.youtube.com.codetutor.Speaker;
 import todolist.youtube.com.codetutor.bean.ToDo;
 import todolist.youtube.com.codetutor.viewmodel.CommonViewModelImplementor;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ToDoAdapter.ListItemClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ToDoAdapter.ListItemClickListener, Speaker {
 
     private static final String TAG = "MainActivity";
 
@@ -31,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerView;
 
     private ToDoAdapter toDoAdapter;
+
+    private TextToSpeech textToSpeech;
 
     private CommonViewModelImplementor mainActivityViewModel;
 
@@ -44,8 +52,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonAddToDo=(Button)findViewById(R.id.buttonAddToDo);
         buttonAddToDo.setOnClickListener(this);
 
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS){
+                    int result=  textToSpeech.setLanguage(Locale.getDefault());
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                        Toast.makeText(MainActivity.this,"TTS not supported on device", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
         mainActivityViewModel = ViewModelProviders.of(this).get(CommonViewModelImplementor.class);
         initrecyclerView();
+        mainActivityViewModel.setSpeaker(this);
 
         mainActivityViewModel.getToDoList().observe(this, new Observer<List<ToDo>>() {
             @Override
@@ -80,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onDestroy();
         mainActivityViewModel.getToDoList().removeObservers(this);
         mainActivityViewModel.getErrorStatus().removeObservers(this);
+        if(textToSpeech!=null){
+            textToSpeech.shutdown();
+        }
     }
 
     @Override
@@ -125,9 +149,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(newActivityIntent);
     }
 
+    @Override
+    public void onItemLongLickListener(ToDo toDo) {
+        this.speak(toDo);
+    }
+
+    @Override
+    public void speak(ToDo toDo){
+        String toDoString= "Complete " +toDo.getToDo() +" from "+toDo.getPlace();
+        textToSpeech.speak(toDoString, TextToSpeech.QUEUE_ADD, null,null);
+    }
+
     private void clearEditTexts(){
         editTextNewToDoString.setText("");
         editTextPlace.setText("");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.optionMenuSpeak:
+                Toast.makeText(MainActivity.this, "Speaking",Toast.LENGTH_SHORT).show();
+                mainActivityViewModel.speakAllToDos();
+            break;
+        }
+        return true;
+    }
 }
